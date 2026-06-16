@@ -1,8 +1,8 @@
 // Business logic for tasks. Knows nothing about HTTP or how data is stored.
-// The manual input check here is replaced by Zod validation in a later phase.
+// Input is already validated by the Zod `validate` middleware before it reaches here.
 import { tasksRepository } from './tasks.repository.js';
-import { BadRequestError, NotFoundError } from '../../shared/errors/index.js';
-import type { CreateTaskInput, UpdateTaskInput } from './tasks.types.js';
+import { NotFoundError } from '../../shared/errors/index.js';
+import type { CreateTaskInput, UpdateTaskInput } from './tasks.schemas.js';
 
 export const tasksService = {
   list() {
@@ -18,9 +18,6 @@ export const tasksService = {
   },
 
   create(input: CreateTaskInput) {
-    if (!input.title || input.title.trim().length < 2) {
-      throw new BadRequestError('title is required and must be at least 2 characters');
-    }
     return tasksRepository.create(input);
   },
 

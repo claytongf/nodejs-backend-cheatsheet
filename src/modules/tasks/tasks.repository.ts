@@ -3,7 +3,8 @@
 // WITHOUT changing the service or controller above it. That is the point of the layering.
 import { randomUUID } from 'node:crypto';
 import { NotFoundError } from '../../shared/errors/index.js';
-import type { Task, CreateTaskInput, UpdateTaskInput } from './tasks.types.js';
+import type { Task } from './tasks.types.js';
+import type { CreateTaskInput, UpdateTaskInput } from './tasks.schemas.js';
 
 const store = new Map<string, Task>();
 
@@ -38,6 +39,8 @@ export const tasksRepository = {
     const updated: Task = {
       ...existing,
       title: input.title ?? existing.title,
+      // Distinguish "not provided" (undefined -> keep) from "clear it" (null -> set null).
+      // `??` cannot express this, since it would also fall back to existing on null.
       description: input.description === undefined ? existing.description : input.description,
       status: input.status ?? existing.status,
       updatedAt: new Date(),

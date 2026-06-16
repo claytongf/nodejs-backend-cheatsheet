@@ -38,9 +38,10 @@ More of the stack (Prisma, PostgreSQL, Zod, JWT, Jest, Docker, ...) arrives in l
 | PATCH | `/tasks/:id/complete` | Mark a task complete |
 | DELETE | `/tasks/:id` | Delete a task |
 
-Tasks currently use an **in-memory** store; they gain real persistence (Prisma + PostgreSQL),
-validation (Zod), and ownership/auth in later phases. Unknown routes return a `404`; typed
-errors (`400`/`404`) and unexpected `500`s are formatted by the centralized error middleware.
+Request bodies are validated with **Zod** (invalid input → `422` with field-level errors).
+Tasks currently use an **in-memory** store; they gain real persistence (Prisma + PostgreSQL)
+and ownership/auth in later phases. Unknown routes return a `404`; typed errors and
+unexpected `500`s are formatted by the centralized error middleware.
 
 ## Getting started
 

@@ -1,0 +1,22 @@
+import { z } from 'zod';
+
+export const taskStatusSchema = z.enum(['TODO', 'IN_PROGRESS', 'DONE']);
+
+export const createTaskSchema = z.object({
+  title: z.string().min(2),
+  description: z.string().max(1000).optional(),
+});
+
+export const updateTaskSchema = z
+  .object({
+    title: z.string().min(2).optional(),
+    description: z.string().max(1000).nullable().optional(),
+    status: taskStatusSchema.optional(),
+  })
+  .refine((data) => Object.keys(data).length > 0, {
+    message: 'Provide at least one field to update',
+  });
+
+// Types are inferred from the schemas — one source of truth for validation and types.
+export type CreateTaskInput = z.infer<typeof createTaskSchema>;
+export type UpdateTaskInput = z.infer<typeof updateTaskSchema>;
