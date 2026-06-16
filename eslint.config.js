@@ -20,8 +20,8 @@ export default tseslint.config(
     },
   },
   {
-    // Examples are teaching scripts: printing to the console is the whole point.
-    files: ['examples/**/*.ts'],
+    // Examples and CLI scripts (e.g. the Prisma seed) print to the console by design.
+    files: ['examples/**/*.ts', 'prisma/**/*.ts'],
     rules: {
       'no-console': 'off',
     },

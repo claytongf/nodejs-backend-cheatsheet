@@ -1,29 +1,29 @@
 // HTTP layer for tasks. Thin: read req, call the service, send res.
-// Errors thrown by the service are caught by Express and forwarded to the error middleware.
+// The async errors are forwarded to the error middleware by the asyncHandler wrapper.
 import type { Request, Response } from 'express';
 import { tasksService } from './tasks.service.js';
 
-export function list(_req: Request, res: Response): void {
-  res.json(tasksService.list());
+export async function list(_req: Request, res: Response): Promise<void> {
+  res.json(await tasksService.list());
 }
 
-export function getById(req: Request, res: Response): void {
-  res.json(tasksService.getById(req.params.id));
+export async function getById(req: Request, res: Response): Promise<void> {
+  res.json(await tasksService.getById(req.params.id));
 }
 
-export function create(req: Request, res: Response): void {
-  res.status(201).json(tasksService.create(req.body));
+export async function create(req: Request, res: Response): Promise<void> {
+  res.status(201).json(await tasksService.create(req.body));
 }
 
-export function update(req: Request, res: Response): void {
-  res.json(tasksService.update(req.params.id, req.body));
+export async function update(req: Request, res: Response): Promise<void> {
+  res.json(await tasksService.update(req.params.id, req.body));
 }
 
-export function complete(req: Request, res: Response): void {
-  res.json(tasksService.complete(req.params.id));
+export async function complete(req: Request, res: Response): Promise<void> {
+  res.json(await tasksService.complete(req.params.id));
 }
 
-export function remove(req: Request, res: Response): void {
-  tasksService.remove(req.params.id);
+export async function remove(req: Request, res: Response): Promise<void> {
+  await tasksService.remove(req.params.id);
   res.status(204).end();
 }

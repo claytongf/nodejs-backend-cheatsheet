@@ -20,11 +20,14 @@ development with TypeScript. Documentation is in **English** and (in later phase
 | Web framework | Express |
 | Dev runner | tsx |
 | Config | dotenv |
+| Validation | Zod |
+| ORM | Prisma |
+| Database | PostgreSQL |
 | Linting | ESLint |
 | Formatting | Prettier |
 | Editor config | EditorConfig |
 
-More of the stack (Prisma, PostgreSQL, Zod, JWT, Jest, Docker, ...) arrives in later phases.
+More of the stack (JWT, Jest, Docker production setup, ...) arrives in later phases.
 
 ## API (so far)
 
@@ -39,15 +42,24 @@ More of the stack (Prisma, PostgreSQL, Zod, JWT, Jest, Docker, ...) arrives in l
 | DELETE | `/tasks/:id` | Delete a task |
 
 Request bodies are validated with **Zod** (invalid input → `422` with field-level errors).
-Tasks currently use an **in-memory** store; they gain real persistence (Prisma + PostgreSQL)
-and ownership/auth in later phases. Unknown routes return a `404`; typed errors and
-unexpected `500`s are formatted by the centralized error middleware.
+Tasks are now persisted in **PostgreSQL via Prisma**. Ownership/auth arrive in later phases.
+Unknown routes return a `404`; typed errors and unexpected `500`s are formatted by the
+centralized error middleware.
 
 ## Getting started
 
 ```bash
 npm install
 cp .env.example .env
+
+# Start PostgreSQL (and Redis) with Docker
+docker compose up -d
+
+# Apply database migrations and seed sample data
+npm run prisma:migrate      # or, non-interactively: npm run prisma:deploy
+npm run db:seed
+
+# Run the dev server
 npm run dev
 ```
 
@@ -55,27 +67,36 @@ npm run dev
 
 | Script | Does |
 | --- | --- |
-| `npm run dev` | Run the entry point with hot reload (tsx) |
+| `npm run dev` | Run the server with hot reload (tsx) |
 | `npm run build` | Compile TypeScript to `dist/` |
 | `npm start` | Run the compiled output |
 | `npm run lint` | Lint with ESLint |
 | `npm run format` | Format with Prettier |
 | `npm run typecheck` | Type-check without emitting |
+| `npm run prisma:migrate` | Create + apply a migration (dev) |
+| `npm run prisma:deploy` | Apply migrations (CI/production) |
+| `npm run prisma:studio` | Open Prisma Studio (visual DB browser) |
+| `npm run db:seed` | Seed sample data |
 
 ## Project structure (so far)
 
 ```text
 nodejs-backend-cheatsheet/
+├── prisma/
+│   ├── schema.prisma     # database models
+│   ├── migrations/       # migration history
+│   └── seed.ts           # sample data
 ├── src/
 │   ├── app.ts            # builds the Express app (no listening)
 │   ├── server.ts         # starts the HTTP server
+│   ├── database/         # shared Prisma client
 │   ├── modules/          # feature modules (layered)
-│   │   └── tasks/        # routes · controller · service · repository · types
-│   ├── middlewares/
-│   │   ├── not-found.middleware.ts
-│   │   └── error.middleware.ts
+│   │   └── tasks/        # routes · controller · service · repository · schemas · types
+│   ├── middlewares/      # validate · not-found · error
 │   └── shared/
-│       └── errors/       # typed AppError hierarchy
+│       ├── errors/       # typed AppError hierarchy
+│       └── utils/        # asyncHandler
+├── docker-compose.yml
 ├── package.json
 ├── tsconfig.json
 ├── eslint.config.js

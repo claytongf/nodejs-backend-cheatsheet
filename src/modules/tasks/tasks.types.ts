@@ -1,13 +1,5 @@
-// Domain type for the tasks module.
-// The CreateTaskInput / UpdateTaskInput types are inferred from the Zod schemas
-// in tasks.schemas.ts (single source of truth for validation and types).
-export type TaskStatus = 'TODO' | 'IN_PROGRESS' | 'DONE';
-
-export interface Task {
-  id: string;
-  title: string;
-  description: string | null;
-  status: TaskStatus;
-  createdAt: Date;
-  updatedAt: Date;
-}
+// Domain types for the tasks module.
+// We re-export the Prisma-generated types so there is one source of truth for the
+// stored shape. The CreateTaskInput / UpdateTaskInput types are inferred from the
+// Zod schemas in tasks.schemas.ts.
+export type { Task, TaskStatus } from '@prisma/client';
