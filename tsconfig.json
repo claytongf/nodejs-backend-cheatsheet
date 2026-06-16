@@ -15,11 +15,12 @@
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
+    "isolatedModules": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,
     "declaration": false
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["node_modules", "dist", "examples"]
+  "exclude": ["node_modules", "dist", "examples", "src/tests"]
 }

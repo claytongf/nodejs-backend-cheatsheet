@@ -79,6 +79,21 @@ npm run db:seed
 npm run dev
 ```
 
+### Running tests
+
+Tests use **Jest + Supertest** and run against a **separate** database (config in
+`.env.test`), so they never touch your dev data.
+
+```bash
+# One-time: create and migrate the test database
+docker compose up -d
+docker exec taskmanager-postgres psql -U postgres -c 'CREATE DATABASE taskmanager_test;'
+DATABASE_URL='postgresql://postgres:postgres@localhost:5432/taskmanager_test?schema=public' \
+  npm run prisma:deploy
+
+npm test
+```
+
 ## Scripts
 
 | Script | Does |
@@ -89,6 +104,8 @@ npm run dev
 | `npm run lint` | Lint with ESLint |
 | `npm run format` | Format with Prettier |
 | `npm run typecheck` | Type-check without emitting |
+| `npm test` | Run the Jest + Supertest suite |
+| `npm run test:watch` | Run tests in watch mode |
 | `npm run prisma:migrate` | Create + apply a migration (dev) |
 | `npm run prisma:deploy` | Apply migrations (CI/production) |
 | `npm run prisma:studio` | Open Prisma Studio (visual DB browser) |
