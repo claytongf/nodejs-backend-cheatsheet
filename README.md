@@ -1,55 +1,179 @@
 # Node.js Backend Cheatsheet 🚀
 
-A practical Node.js backend learning repository, built in **small, professional, portfolio-friendly phases**.
+A practical, well-documented Node.js backend learning repository — built as a **study guide**, a **cheat sheet**, a **working API example**, and a **portfolio project** all at once.
 
-> This project grows step by step. You are looking at an early phase — the foundation.
-> Each commit leaves the project in a working state.
+![Node.js](https://img.shields.io/badge/Node.js-LTS-339933?logo=node.js&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript&logoColor=white)
+![Express](https://img.shields.io/badge/Express-4.x-000000?logo=express&logoColor=white)
+![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748?logo=prisma&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1?logo=postgresql&logoColor=white)
+![Jest](https://img.shields.io/badge/Tested%20with-Jest-C21325?logo=jest&logoColor=white)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
-## Goal
+> **All content is in English** and includes **Laravel → Node.js** comparisons, because many backend developers arrive here from PHP/Laravel.
 
-A study guide, cheat sheet, and working API example for learning modern Node.js backend
-development with TypeScript. Documentation is in **English** and (in later phases) includes
-**Laravel → Node.js** comparisons for developers coming from PHP/Laravel.
+---
 
-## Tech stack (so far)
+## 📖 Short description
+
+This repository teaches modern Node.js backend development by building a real **Task Manager API** with TypeScript, Express, Prisma, PostgreSQL, JWT authentication, Zod validation, role-based authorization, tests, and Docker — and documents every concept along the way.
+
+## 🎯 Why this project exists
+
+Most tutorials show you *one* piece in isolation. Real backend work means wiring **all** the pieces together: routing, validation, auth, database access, error handling, testing, and deployment. This repo:
+
+- Gives you **runnable, isolated examples** for each concept.
+- Gives you a **production-style API** that ties everything together.
+- Gives you **cheat sheets** for quick recall.
+- Gives you **interview prep** and a **study roadmap**.
+
+## 👥 Who this project is for
+
+- Developers learning **Node.js backend** from scratch (beginner → intermediate).
+- **PHP/Laravel developers** moving to the Node.js ecosystem.
+- People preparing for **backend interviews**.
+- Anyone who wants a **clean reference architecture** to copy from.
+
+## 🧰 Tech stack
 
 | Area | Tool |
 | --- | --- |
-| Runtime | Node.js LTS (20+) |
+| Runtime | Node.js LTS |
 | Language | TypeScript (strict) |
 | Web framework | Express |
-| Dev runner | tsx |
-| Config | dotenv |
-| Validation | Zod |
 | ORM | Prisma |
 | Database | PostgreSQL |
+| Validation | Zod |
 | Auth | JWT + bcrypt |
-| Logging | pino + pino-http |
-| Security | helmet, CORS, rate limiting |
+| Logging | pino |
 | Testing | Jest + Supertest |
-| Linting | ESLint |
-| Formatting | Prettier |
-| Editor config | EditorConfig |
-| Infra | Docker Compose (PostgreSQL + Redis) |
+| Tooling | ESLint, Prettier, tsx, dotenv |
+| Infra | Docker, Docker Compose (PostgreSQL + Redis) |
 
-## Production readiness
+## 🎓 What you will learn
 
-- **Environment validation** at startup with Zod (`src/config/env.ts`) — the app refuses to
-  boot with invalid config (fail fast).
-- **Security headers** via `helmet`, configurable **CORS**, and **rate limiting**.
-- **Structured logging** with `pino` (pretty in dev, JSON in production) and per-request
-  logs via `pino-http`.
-- **Graceful shutdown** on `SIGTERM`/`SIGINT` (closes the HTTP server and the Prisma client).
-- A `/health` endpoint for load balancers and orchestrators.
+- How the Node.js runtime and event loop actually work.
+- TypeScript for backend code (strict mode, types, generics).
+- Designing REST APIs and an Express project architecture.
+- Input validation with Zod and centralized error handling.
+- Database modeling and access with Prisma + PostgreSQL.
+- Authentication (JWT), password hashing (bcrypt), and authorization (roles + ownership).
+- Writing integration tests with Jest and Supertest.
+- Security best practices and production/Docker concerns.
+- How all of this maps back to **Laravel** concepts.
 
-See [docs/15-docker-and-production.md](docs/15-docker-and-production.md) for the full guide.
+## 🗂️ Project structure
 
-## API
+```
+nodejs-backend-cheatsheet/
+├── README.md                 # You are here
+├── CLAUDE.md                 # Guidance for AI agents working on this repo
+├── docs/                     # Deep-dive learning chapters (00–18)
+├── cheatsheets/              # Quick-scan reference sheets
+├── examples/                 # Small, isolated, runnable examples
+├── prisma/                   # Prisma schema + seed
+├── src/                      # The Task Manager API
+│   ├── app.ts                # Express app (no listen)
+│   ├── server.ts             # Boots the HTTP server
+│   ├── config/               # env + logger
+│   ├── database/             # Prisma client
+│   ├── middlewares/          # auth, error, validate, not-found
+│   ├── modules/              # auth, users, projects, tasks
+│   ├── shared/               # errors, utils, types
+│   └── tests/                # integration tests
+├── docker-compose.yml
+└── .github/                  # CI + issue/PR templates
+```
+
+## 🚀 Getting started
+
+### Prerequisites
+
+- Node.js **20+** (LTS)
+- Docker + Docker Compose
+- npm (ships with Node)
+
+### 1. Install dependencies
+
+```bash
+npm install
+```
+
+### 2. Set up your environment
+
+```bash
+cp .env.example .env
+# edit .env if needed
+```
+
+### 3. Start the database
+
+```bash
+docker compose up -d
+```
+
+### 4. Run migrations and seed
+
+```bash
+npm run prisma:migrate
+npm run db:seed
+```
+
+### 5. Start the dev server
+
+```bash
+npm run dev
+# API on http://localhost:3000
+```
+
+## 🔐 Environment variables
+
+| Variable | Description | Example |
+| --- | --- | --- |
+| `NODE_ENV` | Runtime environment | `development` |
+| `PORT` | HTTP port | `3000` |
+| `LOG_LEVEL` | pino log level | `info` |
+| `DATABASE_URL` | PostgreSQL connection string | `postgresql://postgres:postgres@localhost:5432/taskmanager?schema=public` |
+| `JWT_SECRET` | Secret used to sign JWTs | `a-long-random-string` |
+| `JWT_EXPIRES_IN` | Token lifetime | `1d` |
+| `REDIS_URL` | Redis connection (queues chapter) | `redis://localhost:6379` |
+
+See [.env.example](.env.example) for the full list. Validation happens at startup in [src/config/env.ts](src/config/env.ts) — the app **refuses to boot** with an invalid config.
+
+## 🐳 Running with Docker
+
+```bash
+docker compose up -d        # start PostgreSQL + Redis
+docker compose ps           # check status
+docker compose logs -f      # follow logs
+docker compose down         # stop
+docker compose down -v      # stop and wipe data
+```
+
+## 💻 Running locally
+
+```bash
+npm run dev          # hot-reload dev server (tsx)
+npm run build        # compile TypeScript to dist/
+npm start            # run the compiled build
+npm run lint         # ESLint
+npm run format       # Prettier
+npm run typecheck    # type-check without emitting
+```
+
+## 🧪 Running tests
+
+```bash
+npm test             # run all tests (Jest + Supertest)
+npm run test:watch   # watch mode
+```
+
+## 🔌 API endpoints
 
 | Method | Path | Auth | Description |
 | --- | --- | --- | --- |
-| GET | `/health` | — | Health check (`{ "status": "ok" }`) |
-| POST | `/auth/register` | — | Register a new user, returns a JWT |
+| GET | `/health` | — | Health check |
+| POST | `/auth/register` | — | Register a new user |
 | POST | `/auth/login` | — | Log in, returns a JWT |
 | GET | `/auth/me` | ✅ | Current authenticated user |
 | GET | `/users` | ✅ admin | List users |
@@ -57,109 +181,22 @@ See [docs/15-docker-and-production.md](docs/15-docker-and-production.md) for the
 | PATCH | `/users/:id` | ✅ | Update a user (self or admin) |
 | DELETE | `/users/:id` | ✅ admin | Delete a user |
 | POST | `/projects` | ✅ | Create a project |
-| GET | `/projects` | ✅ | List your projects (admin: all) |
+| GET | `/projects` | ✅ | List your projects |
 | GET | `/projects/:id` | ✅ | Get a project (owner/admin) |
 | PATCH | `/projects/:id` | ✅ | Update a project (owner/admin) |
 | DELETE | `/projects/:id` | ✅ | Delete a project (owner/admin) |
-| POST | `/tasks` | ✅ | Create a task in a project you own |
-| GET | `/tasks` | ✅ | List your tasks (admin: all) |
+| POST | `/tasks` | ✅ | Create a task |
+| GET | `/tasks` | ✅ | List your tasks |
 | GET | `/tasks/:id` | ✅ | Get a task (owner/admin) |
 | PATCH | `/tasks/:id` | ✅ | Update a task (owner/admin) |
-| PATCH | `/tasks/:id/complete` | ✅ | Mark a task complete (owner/admin) |
 | DELETE | `/tasks/:id` | ✅ | Delete a task (owner/admin) |
+| PATCH | `/tasks/:id/complete` | ✅ | Mark a task complete |
 
-Authentication uses **JWT** (`Authorization: Bearer <token>`). Authorization combines
-**role checks** (`USER` / `ADMIN`) with **ownership checks** (you can only access your own
-projects/tasks; admins may access any). Request bodies are validated with **Zod** (invalid
-input → `422`). Data is persisted in **PostgreSQL via Prisma**. Unknown routes return a
-`404`; typed errors and unexpected `500`s are formatted by the centralized error middleware.
+## 🗺️ Learning roadmap
 
-Seeded logins: `admin@demo.test` / `password123` (admin) and `user@demo.test` / `password123` (user).
+Start at [docs/00-roadmap.md](docs/00-roadmap.md) and work through the chapters in order. Each chapter has a study checklist and interview questions.
 
-## Getting started
-
-```bash
-npm install
-cp .env.example .env
-
-# Start PostgreSQL (and Redis) with Docker
-docker compose up -d
-
-# Apply database migrations and seed sample data
-npm run prisma:migrate      # or, non-interactively: npm run prisma:deploy
-npm run db:seed
-
-# Run the dev server
-npm run dev
-```
-
-### Running tests
-
-Tests use **Jest + Supertest** and run against a **separate** database (config in
-`.env.test`), so they never touch your dev data.
-
-```bash
-# One-time: create and migrate the test database
-docker compose up -d
-docker exec taskmanager-postgres psql -U postgres -c 'CREATE DATABASE taskmanager_test;'
-DATABASE_URL='postgresql://postgres:postgres@localhost:5432/taskmanager_test?schema=public' \
-  npm run prisma:deploy
-
-npm test
-```
-
-## Scripts
-
-| Script | Does |
-| --- | --- |
-| `npm run dev` | Run the server with hot reload (tsx) |
-| `npm run build` | Compile TypeScript to `dist/` |
-| `npm start` | Run the compiled output |
-| `npm run lint` | Lint with ESLint |
-| `npm run format` | Format with Prettier |
-| `npm run typecheck` | Type-check without emitting |
-| `npm test` | Run the Jest + Supertest suite |
-| `npm run test:watch` | Run tests in watch mode |
-| `npm run prisma:migrate` | Create + apply a migration (dev) |
-| `npm run prisma:deploy` | Apply migrations (CI/production) |
-| `npm run prisma:studio` | Open Prisma Studio (visual DB browser) |
-| `npm run db:seed` | Seed sample data |
-
-## Project structure (so far)
-
-```text
-nodejs-backend-cheatsheet/
-├── prisma/
-│   ├── schema.prisma     # database models
-│   ├── migrations/       # migration history
-│   └── seed.ts           # sample data
-├── src/
-│   ├── app.ts            # builds the Express app (no listening)
-│   ├── server.ts         # starts the HTTP server
-│   ├── database/         # shared Prisma client
-│   ├── modules/          # feature modules (layered)
-│   │   ├── auth/         # register · login · me
-│   │   ├── users/        # routes · controller · service · repository · schemas · types
-│   │   ├── projects/     # (same layered structure)
-│   │   └── tasks/        # (same layered structure)
-│   ├── middlewares/      # auth · validate · not-found · error
-│   └── shared/
-│       ├── errors/       # typed AppError hierarchy
-│       ├── types/        # AuthUser + Express Request augmentation
-│       └── utils/        # asyncHandler · password (bcrypt) · jwt · auth-context
-├── docker-compose.yml
-├── package.json
-├── tsconfig.json
-├── eslint.config.js
-├── prettier.config.js
-├── .editorconfig
-├── .env.example
-└── .gitignore
-```
-
-## Documentation index
-
-Start at [docs/00-roadmap.md](docs/00-roadmap.md) and work through the chapters in order.
+## 📚 Documentation index
 
 | # | Chapter |
 | --- | --- |
@@ -183,10 +220,7 @@ Start at [docs/00-roadmap.md](docs/00-roadmap.md) and work through the chapters 
 | 17 | [Laravel → Node.js](docs/17-laravel-to-nodejs.md) |
 | 18 | [Interview questions](docs/18-interview-questions.md) |
 
-> Some chapters reference code (`src/`, `prisma/`, `examples/`) that is introduced in
-> later phases of this repository.
-
-## Cheatsheets index
+## ⚡ Cheatsheets index
 
 - [Node commands](cheatsheets/node-commands.md)
 - [Express](cheatsheets/express.md)
@@ -197,23 +231,32 @@ Start at [docs/00-roadmap.md](docs/00-roadmap.md) and work through the chapters 
 - [Error handling](cheatsheets/error-handling.md)
 - [Production](cheatsheets/production.md)
 
-## Examples
+## 🔄 Laravel to Node.js comparison
 
-Small, isolated, runnable examples live in [examples/](examples/) — one concept each
-(Node core, modules, async/await, HTTP server, Express routes, middleware, error handling,
-Zod validation, Prisma CRUD, tests). Run any of them with:
+| Laravel | Node.js (this project) |
+| --- | --- |
+| `routes/web.php`, `routes/api.php` | Express `Router` in `*.routes.ts` |
+| Controllers | `*.controller.ts` |
+| Eloquent Models | Prisma models + `*.repository.ts` |
+| Form Requests | Zod schemas in `*.schemas.ts` |
+| Middleware | Express middleware in `src/middlewares/` |
+| Service Container / DI | Plain imports & factory functions |
+| `php artisan migrate` | `npm run prisma:migrate` |
+| `php artisan tinker` | `npm run prisma:studio` |
+| Sanctum / Passport | JWT + bcrypt |
+| Gates / Policies | Role + ownership checks |
+| PHPUnit / Pest | Jest + Supertest |
 
-```bash
-npx tsx examples/01-node-core/index.ts
-```
+Full chapter: [docs/17-laravel-to-nodejs.md](docs/17-laravel-to-nodejs.md).
 
-See [examples/README.md](examples/README.md) for the full list and prerequisites.
+## 🎤 Interview preparation
 
-## Roadmap
+Every doc chapter ends with interview questions and short answers. A consolidated set lives in [docs/18-interview-questions.md](docs/18-interview-questions.md).
 
-This repository is developed in phases (foundation → Express app → docs → examples →
-layered API → validation → Prisma → auth → resources → tests → production → CI/community).
+## 🤝 Contributing
 
-## License
+Contributions are welcome — docs, examples, tests, bug fixes, and cheat sheets. Read [CONTRIBUTING.md](CONTRIBUTING.md) and our [Code of Conduct](CODE_OF_CONDUCT.md).
 
-MIT (added with the community files in a later phase).
+## 📄 License
+
+Licensed under the [MIT License](LICENSE).
