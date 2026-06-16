@@ -71,6 +71,7 @@ nodejs-backend-cheatsheet/
 ├── docs/                     # Deep-dive learning chapters (00–18)
 ├── cheatsheets/              # Quick-scan reference sheets
 ├── examples/                 # Small, isolated, runnable examples
+├── prisma.config.ts          # Prisma 7 config (schema path, migrate URL, seed)
 ├── prisma/                   # Prisma schema + seed
 ├── src/                      # The Task Manager API
 │   ├── app.ts                # Express app (no listen)

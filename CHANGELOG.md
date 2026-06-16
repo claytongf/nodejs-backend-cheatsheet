@@ -18,6 +18,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Docker Compose for PostgreSQL and Redis.
 - GitHub CI workflow (lint, build, test) and issue/PR templates.
 
+### Changed
+
+- Upgraded Prisma from 5.x to 7.x. The connection URL moved out of `schema.prisma`
+  into `prisma.config.ts`, and the application now connects through the PostgreSQL
+  driver adapter (`@prisma/adapter-pg`). The `package.json#prisma` key was replaced by
+  `prisma.config.ts`.
+
+### Security
+
+- Resolved all `npm audit` advisories (19 moderate) by pinning the transitive
+  `js-yaml` dependency to the patched `^4.2.0` via a `package.json` override.
+
 ## [0.1.0] - 2026-06-15
 
 - First public scaffold of the learning repository.
