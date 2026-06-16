@@ -73,6 +73,46 @@ nodejs-backend-cheatsheet/
 └── .gitignore
 ```
 
+## Documentation index
+
+Start at [docs/00-roadmap.md](docs/00-roadmap.md) and work through the chapters in order.
+
+| # | Chapter |
+| --- | --- |
+| 00 | [Roadmap](docs/00-roadmap.md) |
+| 01 | [Node.js runtime](docs/01-nodejs-runtime.md) |
+| 02 | [JavaScript & TypeScript](docs/02-javascript-typescript.md) |
+| 03 | [HTTP & REST APIs](docs/03-http-and-rest-apis.md) |
+| 04 | [Express fundamentals](docs/04-express-fundamentals.md) |
+| 05 | [Project architecture](docs/05-project-architecture.md) |
+| 06 | [Async/await, promises & the event loop](docs/06-async-await-promises-event-loop.md) |
+| 07 | [Validation with Zod](docs/07-validation-with-zod.md) |
+| 08 | [Error handling](docs/08-error-handling.md) |
+| 09 | [Database: Prisma & PostgreSQL](docs/09-database-prisma-postgresql.md) |
+| 10 | [Authentication (JWT)](docs/10-authentication-jwt.md) |
+| 11 | [Authorization (roles & permissions)](docs/11-authorization-roles-permissions.md) |
+| 12 | [Testing (Jest & Supertest)](docs/12-testing-jest-supertest.md) |
+| 13 | [Security best practices](docs/13-security-best-practices.md) |
+| 14 | [Queues, workers & Redis](docs/14-queues-workers-redis.md) |
+| 15 | [Docker & production](docs/15-docker-and-production.md) |
+| 16 | [NestJS overview](docs/16-nestjs-overview.md) |
+| 17 | [Laravel → Node.js](docs/17-laravel-to-nodejs.md) |
+| 18 | [Interview questions](docs/18-interview-questions.md) |
+
+> Some chapters reference code (`src/`, `prisma/`, `examples/`) that is introduced in
+> later phases of this repository.
+
+## Cheatsheets index
+
+- [Node commands](cheatsheets/node-commands.md)
+- [Express](cheatsheets/express.md)
+- [TypeScript](cheatsheets/typescript.md)
+- [Prisma](cheatsheets/prisma.md)
+- [Authentication](cheatsheets/authentication.md)
+- [Testing](cheatsheets/testing.md)
+- [Error handling](cheatsheets/error-handling.md)
+- [Production](cheatsheets/production.md)
+
 ## Roadmap
 
 This repository is developed in phases (foundation → Express app → docs → examples →
