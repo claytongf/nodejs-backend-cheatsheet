@@ -2,6 +2,7 @@
 // Keeping this separate from server.ts lets tests import `app` directly later
 // (e.g. with Supertest) without binding to a port.
 import express, { type Request, type Response } from 'express';
+import { tasksRouter } from './modules/tasks/tasks.routes.js';
 import { notFoundMiddleware } from './middlewares/not-found.middleware.js';
 import { errorMiddleware } from './middlewares/error.middleware.js';
 
@@ -16,7 +17,8 @@ export function createApp() {
     res.json({ status: 'ok', uptime: process.uptime() });
   });
 
-  // Feature routers will be mounted here in later phases.
+  // Feature routers.
+  app.use('/tasks', tasksRouter);
 
   // 404 fallback, then the centralized error handler — ORDER MATTERS:
   // these must come AFTER all routes.

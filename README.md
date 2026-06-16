@@ -31,9 +31,16 @@ More of the stack (Prisma, PostgreSQL, Zod, JWT, Jest, Docker, ...) arrives in l
 | Method | Path | Description |
 | --- | --- | --- |
 | GET | `/health` | Health check (`{ "status": "ok" }`) |
+| GET | `/tasks` | List tasks |
+| POST | `/tasks` | Create a task |
+| GET | `/tasks/:id` | Get a task |
+| PATCH | `/tasks/:id` | Update a task |
+| PATCH | `/tasks/:id/complete` | Mark a task complete |
+| DELETE | `/tasks/:id` | Delete a task |
 
-Unknown routes return a `404` with a JSON message; unexpected errors return a `500` from
-the centralized error middleware.
+Tasks currently use an **in-memory** store; they gain real persistence (Prisma + PostgreSQL),
+validation (Zod), and ownership/auth in later phases. Unknown routes return a `404`; typed
+errors (`400`/`404`) and unexpected `500`s are formatted by the centralized error middleware.
 
 ## Getting started
 
@@ -61,9 +68,13 @@ nodejs-backend-cheatsheet/
 ├── src/
 │   ├── app.ts            # builds the Express app (no listening)
 │   ├── server.ts         # starts the HTTP server
-│   └── middlewares/
-│       ├── not-found.middleware.ts
-│       └── error.middleware.ts
+│   ├── modules/          # feature modules (layered)
+│   │   └── tasks/        # routes · controller · service · repository · types
+│   ├── middlewares/
+│   │   ├── not-found.middleware.ts
+│   │   └── error.middleware.ts
+│   └── shared/
+│       └── errors/       # typed AppError hierarchy
 ├── package.json
 ├── tsconfig.json
 ├── eslint.config.js
