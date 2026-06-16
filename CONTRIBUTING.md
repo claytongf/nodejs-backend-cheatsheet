@@ -8,25 +8,31 @@ All contributions must be in **English**.
 ## Ways to contribute
 
 ### 📝 Documentation improvements
+
 - Fix typos, clarify explanations, improve examples.
 - Keep the chapter structure (explanation → why → jobs → examples → Laravel comparison → mistakes → best practices → checklist → interview Q&A).
 
 ### 🧩 New examples
+
 - Add small, **isolated**, runnable examples under `examples/`.
 - One concept per example. Include a short `README.md` explaining how to run it.
 
 ### 🐛 Bug fixes
+
 - Open an issue describing the bug (use the bug report template).
 - Add or update a test that reproduces the bug.
 
 ### ✅ Tests
+
 - Use Jest + Supertest. Test public HTTP behavior.
 - Add a happy-path and a failure-path test for new endpoints.
 
 ### ⚡ New cheatsheets
+
 - Keep them concise and scannable: tables, short snippets, common commands.
 
 ### 💡 Suggestions
+
 - Open a documentation issue and tell us what was confusing or missing.
 
 ## Development setup

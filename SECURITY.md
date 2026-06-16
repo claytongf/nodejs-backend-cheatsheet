@@ -6,8 +6,8 @@ because **teaching secure patterns is one of its goals**.
 ## Supported versions
 
 | Version | Supported |
-| --- | --- |
-| 0.1.x | ✅ |
+| ------- | --------- |
+| 0.1.x   | ✅        |
 
 ## Reporting a vulnerability
 

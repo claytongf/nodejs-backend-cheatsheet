@@ -13,7 +13,10 @@ describe('Projects & Tasks', () => {
   it('creates a project and a task, then marks the task complete', async () => {
     const token = await registerAndLogin('owner@example.com');
 
-    const project = await request(app).post('/projects').set(bearer(token)).send({ name: 'My Project' });
+    const project = await request(app)
+      .post('/projects')
+      .set(bearer(token))
+      .send({ name: 'My Project' });
     expect(project.status).toBe(201);
 
     const task = await request(app)
@@ -38,7 +41,10 @@ describe('Projects & Tasks', () => {
     const ownerToken = await registerAndLogin('a@example.com');
     const otherToken = await registerAndLogin('b@example.com');
 
-    const project = await request(app).post('/projects').set(bearer(ownerToken)).send({ name: 'Private' });
+    const project = await request(app)
+      .post('/projects')
+      .set(bearer(ownerToken))
+      .send({ name: 'Private' });
     const res = await request(app).get(`/projects/${project.body.id}`).set(bearer(otherToken));
     expect(res.status).toBe(403);
   });
@@ -48,10 +54,16 @@ describe('Projects & Tasks', () => {
     expect(res.status).toBe(401);
   });
 
-  it('lists only the requesting user\'s tasks', async () => {
+  it("lists only the requesting user's tasks", async () => {
     const token = await registerAndLogin('list@example.com');
-    const project = await request(app).post('/projects').set(bearer(token)).send({ name: 'Project A' });
-    await request(app).post('/tasks').set(bearer(token)).send({ title: 'T1', projectId: project.body.id });
+    const project = await request(app)
+      .post('/projects')
+      .set(bearer(token))
+      .send({ name: 'Project A' });
+    await request(app)
+      .post('/tasks')
+      .set(bearer(token))
+      .send({ title: 'T1', projectId: project.body.id });
 
     const res = await request(app).get('/tasks').set(bearer(token));
     expect(res.status).toBe(200);

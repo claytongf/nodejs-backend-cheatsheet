@@ -13,31 +13,37 @@ A suggested path through this repository, from zero to a job-ready Node.js backe
 ## The path
 
 ### Stage 1 — Foundations
+
 - [01 · Node.js runtime](01-nodejs-runtime.md) — what Node is and how it runs your code.
 - [02 · JavaScript & TypeScript](02-javascript-typescript.md) — the language you write the backend in.
 - [03 · HTTP & REST APIs](03-http-and-rest-apis.md) — how the web talks.
 
 ### Stage 2 — Building APIs
+
 - [04 · Express fundamentals](04-express-fundamentals.md)
 - [05 · Project architecture](05-project-architecture.md)
 - [06 · Async/await, promises & the event loop](06-async-await-promises-event-loop.md)
 
 ### Stage 3 — Correctness & data
+
 - [07 · Validation with Zod](07-validation-with-zod.md)
 - [08 · Error handling](08-error-handling.md)
 - [09 · Database: Prisma & PostgreSQL](09-database-prisma-postgresql.md)
 
 ### Stage 4 — Security
+
 - [10 · Authentication (JWT)](10-authentication-jwt.md)
 - [11 · Authorization (roles & permissions)](11-authorization-roles-permissions.md)
 - [13 · Security best practices](13-security-best-practices.md)
 
 ### Stage 5 — Quality & production
+
 - [12 · Testing (Jest & Supertest)](12-testing-jest-supertest.md)
 - [14 · Queues, workers & Redis](14-queues-workers-redis.md)
 - [15 · Docker & production](15-docker-and-production.md)
 
 ### Stage 6 — Going further
+
 - [16 · NestJS overview](16-nestjs-overview.md)
 - [17 · Laravel → Node.js](17-laravel-to-nodejs.md)
 - [18 · Interview questions](18-interview-questions.md)

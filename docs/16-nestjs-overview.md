@@ -19,14 +19,14 @@ pipes (validation), and interceptors. The concepts map directly onto what you le
 
 ## Concept mapping (this project → Nest)
 
-| This project (Express) | NestJS |
-| --- | --- |
+| This project (Express)            | NestJS                              |
+| --------------------------------- | ----------------------------------- |
 | `*.routes.ts` + `*.controller.ts` | `@Controller` with route decorators |
-| `*.service.ts` | `@Injectable()` service (DI) |
-| `validate.middleware.ts` + Zod | Pipes (e.g. `ZodValidationPipe`) |
-| `auth.middleware.ts` | Guards (`@UseGuards`) |
-| `error.middleware.ts` | Exception filters |
-| manual imports | dependency injection container |
+| `*.service.ts`                    | `@Injectable()` service (DI)        |
+| `validate.middleware.ts` + Zod    | Pipes (e.g. `ZodValidationPipe`)    |
+| `auth.middleware.ts`              | Guards (`@UseGuards`)               |
+| `error.middleware.ts`             | Exception filters                   |
+| manual imports                    | dependency injection container      |
 
 ## Simple code example
 

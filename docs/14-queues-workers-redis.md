@@ -48,13 +48,13 @@ notification when a task is created, keeping `POST /tasks` fast.
 
 ## Laravel comparison
 
-| Laravel | Node equivalent |
-| --- | --- |
-| `php artisan queue:work` | a BullMQ `Worker` process |
-| `Job` classes | job handlers / processors |
-| `dispatch(new SendEmail())` | `queue.add('email', data)` |
-| Redis/database/SQS drivers | Redis (BullMQ), etc. |
-| `php artisan schedule:run` | BullMQ repeatable jobs / cron |
+| Laravel                     | Node equivalent               |
+| --------------------------- | ----------------------------- |
+| `php artisan queue:work`    | a BullMQ `Worker` process     |
+| `Job` classes               | job handlers / processors     |
+| `dispatch(new SendEmail())` | `queue.add('email', data)`    |
+| Redis/database/SQS drivers  | Redis (BullMQ), etc.          |
+| `php artisan schedule:run`  | BullMQ repeatable jobs / cron |
 
 If you have used Laravel queues, the mental model transfers directly.
 

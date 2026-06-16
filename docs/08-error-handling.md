@@ -23,7 +23,10 @@ This is standard in production Express apps.
 ```ts
 // A typed application error
 export class AppError extends Error {
-  constructor(public statusCode: number, message: string) {
+  constructor(
+    public statusCode: number,
+    message: string,
+  ) {
     super(message);
     this.name = this.constructor.name;
   }
@@ -53,12 +56,12 @@ logged `500`. The 404 fallback is `not-found.middleware.ts`.
 
 ## Laravel comparison
 
-| Laravel | This project |
-| --- | --- |
-| `App\Exceptions\Handler` | `error.middleware.ts` |
-| `abort(404)` | `throw new NotFoundError()` |
-| `ValidationException` → `422` | `ValidationError` → `422` |
-| `ModelNotFoundException` | `NotFoundError` |
+| Laravel                       | This project                |
+| ----------------------------- | --------------------------- |
+| `App\Exceptions\Handler`      | `error.middleware.ts`       |
+| `abort(404)`                  | `throw new NotFoundError()` |
+| `ValidationException` → `422` | `ValidationError` → `422`   |
+| `ModelNotFoundException`      | `NotFoundError`             |
 
 Laravel's global Handler is conceptually the same as Express error middleware.
 

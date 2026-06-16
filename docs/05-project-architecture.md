@@ -13,14 +13,14 @@ Each layer has one job and only talks to its immediate neighbors.
 
 ## The layers
 
-| Layer | File | Responsibility |
-| --- | --- | --- |
-| Routes | `*.routes.ts` | Map HTTP paths to controllers, attach middleware |
-| Controller | `*.controller.ts` | Read `req`, call a service, send `res` |
-| Service | `*.service.ts` | Business logic, authorization decisions |
-| Repository | `*.repository.ts` | The only place that touches Prisma |
-| Schemas | `*.schemas.ts` | Zod validation + inferred types |
-| Types | `*.types.ts` | Shared TypeScript types |
+| Layer      | File              | Responsibility                                   |
+| ---------- | ----------------- | ------------------------------------------------ |
+| Routes     | `*.routes.ts`     | Map HTTP paths to controllers, attach middleware |
+| Controller | `*.controller.ts` | Read `req`, call a service, send `res`           |
+| Service    | `*.service.ts`    | Business logic, authorization decisions          |
+| Repository | `*.repository.ts` | The only place that touches Prisma               |
+| Schemas    | `*.schemas.ts`    | Zod validation + inferred types                  |
+| Types      | `*.types.ts`      | Shared TypeScript types                          |
 
 ## Why it matters in backend development
 
@@ -69,13 +69,13 @@ files top to bottom: `projects.routes.ts` wires middleware and controllers,
 
 ## Laravel comparison
 
-| Laravel | This project |
-| --- | --- |
-| Controller | `*.controller.ts` |
-| Service class | `*.service.ts` |
-| Eloquent model / Repository | `*.repository.ts` |
-| Form Request | `*.schemas.ts` (Zod) |
-| `routes/api.php` | `*.routes.ts` |
+| Laravel                     | This project         |
+| --------------------------- | -------------------- |
+| Controller                  | `*.controller.ts`    |
+| Service class               | `*.service.ts`       |
+| Eloquent model / Repository | `*.repository.ts`    |
+| Form Request                | `*.schemas.ts` (Zod) |
+| `routes/api.php`            | `*.routes.ts`        |
 
 Laravel often puts logic in fat controllers or models; here we deliberately keep
 controllers thin and isolate DB access in repositories.
@@ -99,7 +99,7 @@ controllers thin and isolate DB access in repositories.
 - [ ] I can explain each layer's responsibility.
 - [ ] I know why DB access is isolated in repositories.
 - [ ] I can add a new module following the structure.
-- [ ] I can justify when *not* to add a layer.
+- [ ] I can justify when _not_ to add a layer.
 
 ## Interview questions
 

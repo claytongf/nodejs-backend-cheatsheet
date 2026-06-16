@@ -16,24 +16,24 @@ framework "magic."
 
 ## Big-picture mapping
 
-| Laravel | Node.js (this project) |
-| --- | --- |
-| Routing (`routes/api.php`) | Express `Router` in `*.routes.ts` |
-| Controllers | `*.controller.ts` |
-| Eloquent models | Prisma models + `*.repository.ts` |
+| Laravel                            | Node.js (this project)               |
+| ---------------------------------- | ------------------------------------ |
+| Routing (`routes/api.php`)         | Express `Router` in `*.routes.ts`    |
+| Controllers                        | `*.controller.ts`                    |
+| Eloquent models                    | Prisma models + `*.repository.ts`    |
 | Migrations (`php artisan migrate`) | Prisma migrations (`prisma migrate`) |
-| Form Requests | Zod schemas (`*.schemas.ts`) |
-| Middleware (classes) | Express middleware (functions) |
-| Service container / DI | plain imports / factory functions |
-| Gates & Policies | role middleware + ownership checks |
-| Sanctum / Passport | JWT + bcrypt |
-| Artisan commands | npm scripts + `tsx` scripts |
-| Tinker | `prisma studio` / a REPL |
-| PHPUnit / Pest | Jest + Supertest |
-| `config()` + `.env` | validated `config/env.ts` + `.env` |
-| Queues (`queue:work`) | BullMQ workers + Redis |
-| Blade (views) | usually none — APIs return JSON |
-| Sail | Docker Compose |
+| Form Requests                      | Zod schemas (`*.schemas.ts`)         |
+| Middleware (classes)               | Express middleware (functions)       |
+| Service container / DI             | plain imports / factory functions    |
+| Gates & Policies                   | role middleware + ownership checks   |
+| Sanctum / Passport                 | JWT + bcrypt                         |
+| Artisan commands                   | npm scripts + `tsx` scripts          |
+| Tinker                             | `prisma studio` / a REPL             |
+| PHPUnit / Pest                     | Jest + Supertest                     |
+| `config()` + `.env`                | validated `config/env.ts` + `.env`   |
+| Queues (`queue:work`)              | BullMQ workers + Redis               |
+| Blade (views)                      | usually none — APIs return JSON      |
+| Sail                               | Docker Compose                       |
 
 ## Mindset shifts
 

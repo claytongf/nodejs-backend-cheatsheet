@@ -47,11 +47,11 @@ middleware turns into a `422` with field-level messages. The env loader
 
 ## Laravel comparison
 
-| Laravel | This project |
-| --- | --- |
-| Form Request `rules()` | Zod schema |
-| `$request->validated()` | the parsed Zod output (typed!) |
-| `422` validation response | `ValidationError` → `422` |
+| Laravel                   | This project                   |
+| ------------------------- | ------------------------------ |
+| Form Request `rules()`    | Zod schema                     |
+| `$request->validated()`   | the parsed Zod output (typed!) |
+| `422` validation response | `ValidationError` → `422`      |
 
 Laravel's validator returns loosely-typed arrays; Zod returns a value whose **TypeScript
 type is inferred from the schema**, so the rest of your code is type-safe.

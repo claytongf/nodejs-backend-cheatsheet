@@ -20,7 +20,7 @@ This repository teaches modern Node.js backend development by building a real **
 
 ## 🎯 Why this project exists
 
-Most tutorials show you *one* piece in isolation. Real backend work means wiring **all** the pieces together: routing, validation, auth, database access, error handling, testing, and deployment. This repo:
+Most tutorials show you _one_ piece in isolation. Real backend work means wiring **all** the pieces together: routing, validation, auth, database access, error handling, testing, and deployment. This repo:
 
 - Gives you **runnable, isolated examples** for each concept.
 - Gives you a **production-style API** that ties everything together.
@@ -36,19 +36,19 @@ Most tutorials show you *one* piece in isolation. Real backend work means wiring
 
 ## 🧰 Tech stack
 
-| Area | Tool |
-| --- | --- |
-| Runtime | Node.js LTS |
-| Language | TypeScript (strict) |
-| Web framework | Express |
-| ORM | Prisma |
-| Database | PostgreSQL |
-| Validation | Zod |
-| Auth | JWT + bcrypt |
-| Logging | pino |
-| Testing | Jest + Supertest |
-| Tooling | ESLint, Prettier, tsx, dotenv |
-| Infra | Docker, Docker Compose (PostgreSQL + Redis) |
+| Area          | Tool                                        |
+| ------------- | ------------------------------------------- |
+| Runtime       | Node.js LTS                                 |
+| Language      | TypeScript (strict)                         |
+| Web framework | Express                                     |
+| ORM           | Prisma                                      |
+| Database      | PostgreSQL                                  |
+| Validation    | Zod                                         |
+| Auth          | JWT + bcrypt                                |
+| Logging       | pino                                        |
+| Testing       | Jest + Supertest                            |
+| Tooling       | ESLint, Prettier, tsx, dotenv               |
+| Infra         | Docker, Docker Compose (PostgreSQL + Redis) |
 
 ## 🎓 What you will learn
 
@@ -128,15 +128,15 @@ npm run dev
 
 ## 🔐 Environment variables
 
-| Variable | Description | Example |
-| --- | --- | --- |
-| `NODE_ENV` | Runtime environment | `development` |
-| `PORT` | HTTP port | `3000` |
-| `LOG_LEVEL` | pino log level | `info` |
-| `DATABASE_URL` | PostgreSQL connection string | `postgresql://postgres:postgres@localhost:5432/taskmanager?schema=public` |
-| `JWT_SECRET` | Secret used to sign JWTs | `a-long-random-string` |
-| `JWT_EXPIRES_IN` | Token lifetime | `1d` |
-| `REDIS_URL` | Redis connection (queues chapter) | `redis://localhost:6379` |
+| Variable         | Description                       | Example                                                                   |
+| ---------------- | --------------------------------- | ------------------------------------------------------------------------- |
+| `NODE_ENV`       | Runtime environment               | `development`                                                             |
+| `PORT`           | HTTP port                         | `3000`                                                                    |
+| `LOG_LEVEL`      | pino log level                    | `info`                                                                    |
+| `DATABASE_URL`   | PostgreSQL connection string      | `postgresql://postgres:postgres@localhost:5432/taskmanager?schema=public` |
+| `JWT_SECRET`     | Secret used to sign JWTs          | `a-long-random-string`                                                    |
+| `JWT_EXPIRES_IN` | Token lifetime                    | `1d`                                                                      |
+| `REDIS_URL`      | Redis connection (queues chapter) | `redis://localhost:6379`                                                  |
 
 See [.env.example](.env.example) for the full list. Validation happens at startup in [src/config/env.ts](src/config/env.ts) — the app **refuses to boot** with an invalid config.
 
@@ -170,27 +170,27 @@ npm run test:watch   # watch mode
 
 ## 🔌 API endpoints
 
-| Method | Path | Auth | Description |
-| --- | --- | --- | --- |
-| GET | `/health` | — | Health check |
-| POST | `/auth/register` | — | Register a new user |
-| POST | `/auth/login` | — | Log in, returns a JWT |
-| GET | `/auth/me` | ✅ | Current authenticated user |
-| GET | `/users` | ✅ admin | List users |
-| GET | `/users/:id` | ✅ | Get a user |
-| PATCH | `/users/:id` | ✅ | Update a user (self or admin) |
-| DELETE | `/users/:id` | ✅ admin | Delete a user |
-| POST | `/projects` | ✅ | Create a project |
-| GET | `/projects` | ✅ | List your projects |
-| GET | `/projects/:id` | ✅ | Get a project (owner/admin) |
-| PATCH | `/projects/:id` | ✅ | Update a project (owner/admin) |
-| DELETE | `/projects/:id` | ✅ | Delete a project (owner/admin) |
-| POST | `/tasks` | ✅ | Create a task |
-| GET | `/tasks` | ✅ | List your tasks |
-| GET | `/tasks/:id` | ✅ | Get a task (owner/admin) |
-| PATCH | `/tasks/:id` | ✅ | Update a task (owner/admin) |
-| DELETE | `/tasks/:id` | ✅ | Delete a task (owner/admin) |
-| PATCH | `/tasks/:id/complete` | ✅ | Mark a task complete |
+| Method | Path                  | Auth     | Description                    |
+| ------ | --------------------- | -------- | ------------------------------ |
+| GET    | `/health`             | —        | Health check                   |
+| POST   | `/auth/register`      | —        | Register a new user            |
+| POST   | `/auth/login`         | —        | Log in, returns a JWT          |
+| GET    | `/auth/me`            | ✅       | Current authenticated user     |
+| GET    | `/users`              | ✅ admin | List users                     |
+| GET    | `/users/:id`          | ✅       | Get a user                     |
+| PATCH  | `/users/:id`          | ✅       | Update a user (self or admin)  |
+| DELETE | `/users/:id`          | ✅ admin | Delete a user                  |
+| POST   | `/projects`           | ✅       | Create a project               |
+| GET    | `/projects`           | ✅       | List your projects             |
+| GET    | `/projects/:id`       | ✅       | Get a project (owner/admin)    |
+| PATCH  | `/projects/:id`       | ✅       | Update a project (owner/admin) |
+| DELETE | `/projects/:id`       | ✅       | Delete a project (owner/admin) |
+| POST   | `/tasks`              | ✅       | Create a task                  |
+| GET    | `/tasks`              | ✅       | List your tasks                |
+| GET    | `/tasks/:id`          | ✅       | Get a task (owner/admin)       |
+| PATCH  | `/tasks/:id`          | ✅       | Update a task (owner/admin)    |
+| DELETE | `/tasks/:id`          | ✅       | Delete a task (owner/admin)    |
+| PATCH  | `/tasks/:id/complete` | ✅       | Mark a task complete           |
 
 ## 🗺️ Learning roadmap
 
@@ -198,27 +198,27 @@ Start at [docs/00-roadmap.md](docs/00-roadmap.md) and work through the chapters 
 
 ## 📚 Documentation index
 
-| # | Chapter |
-| --- | --- |
-| 00 | [Roadmap](docs/00-roadmap.md) |
-| 01 | [Node.js runtime](docs/01-nodejs-runtime.md) |
-| 02 | [JavaScript & TypeScript](docs/02-javascript-typescript.md) |
-| 03 | [HTTP & REST APIs](docs/03-http-and-rest-apis.md) |
-| 04 | [Express fundamentals](docs/04-express-fundamentals.md) |
-| 05 | [Project architecture](docs/05-project-architecture.md) |
-| 06 | [Async/await, promises & the event loop](docs/06-async-await-promises-event-loop.md) |
-| 07 | [Validation with Zod](docs/07-validation-with-zod.md) |
-| 08 | [Error handling](docs/08-error-handling.md) |
-| 09 | [Database: Prisma & PostgreSQL](docs/09-database-prisma-postgresql.md) |
-| 10 | [Authentication (JWT)](docs/10-authentication-jwt.md) |
-| 11 | [Authorization (roles & permissions)](docs/11-authorization-roles-permissions.md) |
-| 12 | [Testing (Jest & Supertest)](docs/12-testing-jest-supertest.md) |
-| 13 | [Security best practices](docs/13-security-best-practices.md) |
-| 14 | [Queues, workers & Redis](docs/14-queues-workers-redis.md) |
-| 15 | [Docker & production](docs/15-docker-and-production.md) |
-| 16 | [NestJS overview](docs/16-nestjs-overview.md) |
-| 17 | [Laravel → Node.js](docs/17-laravel-to-nodejs.md) |
-| 18 | [Interview questions](docs/18-interview-questions.md) |
+| #   | Chapter                                                                              |
+| --- | ------------------------------------------------------------------------------------ |
+| 00  | [Roadmap](docs/00-roadmap.md)                                                        |
+| 01  | [Node.js runtime](docs/01-nodejs-runtime.md)                                         |
+| 02  | [JavaScript & TypeScript](docs/02-javascript-typescript.md)                          |
+| 03  | [HTTP & REST APIs](docs/03-http-and-rest-apis.md)                                    |
+| 04  | [Express fundamentals](docs/04-express-fundamentals.md)                              |
+| 05  | [Project architecture](docs/05-project-architecture.md)                              |
+| 06  | [Async/await, promises & the event loop](docs/06-async-await-promises-event-loop.md) |
+| 07  | [Validation with Zod](docs/07-validation-with-zod.md)                                |
+| 08  | [Error handling](docs/08-error-handling.md)                                          |
+| 09  | [Database: Prisma & PostgreSQL](docs/09-database-prisma-postgresql.md)               |
+| 10  | [Authentication (JWT)](docs/10-authentication-jwt.md)                                |
+| 11  | [Authorization (roles & permissions)](docs/11-authorization-roles-permissions.md)    |
+| 12  | [Testing (Jest & Supertest)](docs/12-testing-jest-supertest.md)                      |
+| 13  | [Security best practices](docs/13-security-best-practices.md)                        |
+| 14  | [Queues, workers & Redis](docs/14-queues-workers-redis.md)                           |
+| 15  | [Docker & production](docs/15-docker-and-production.md)                              |
+| 16  | [NestJS overview](docs/16-nestjs-overview.md)                                        |
+| 17  | [Laravel → Node.js](docs/17-laravel-to-nodejs.md)                                    |
+| 18  | [Interview questions](docs/18-interview-questions.md)                                |
 
 ## ⚡ Cheatsheets index
 
@@ -233,19 +233,19 @@ Start at [docs/00-roadmap.md](docs/00-roadmap.md) and work through the chapters 
 
 ## 🔄 Laravel to Node.js comparison
 
-| Laravel | Node.js (this project) |
-| --- | --- |
-| `routes/web.php`, `routes/api.php` | Express `Router` in `*.routes.ts` |
-| Controllers | `*.controller.ts` |
-| Eloquent Models | Prisma models + `*.repository.ts` |
-| Form Requests | Zod schemas in `*.schemas.ts` |
-| Middleware | Express middleware in `src/middlewares/` |
-| Service Container / DI | Plain imports & factory functions |
-| `php artisan migrate` | `npm run prisma:migrate` |
-| `php artisan tinker` | `npm run prisma:studio` |
-| Sanctum / Passport | JWT + bcrypt |
-| Gates / Policies | Role + ownership checks |
-| PHPUnit / Pest | Jest + Supertest |
+| Laravel                            | Node.js (this project)                   |
+| ---------------------------------- | ---------------------------------------- |
+| `routes/web.php`, `routes/api.php` | Express `Router` in `*.routes.ts`        |
+| Controllers                        | `*.controller.ts`                        |
+| Eloquent Models                    | Prisma models + `*.repository.ts`        |
+| Form Requests                      | Zod schemas in `*.schemas.ts`            |
+| Middleware                         | Express middleware in `src/middlewares/` |
+| Service Container / DI             | Plain imports & factory functions        |
+| `php artisan migrate`              | `npm run prisma:migrate`                 |
+| `php artisan tinker`               | `npm run prisma:studio`                  |
+| Sanctum / Passport                 | JWT + bcrypt                             |
+| Gates / Policies                   | Role + ownership checks                  |
+| PHPUnit / Pest                     | Jest + Supertest                         |
 
 Full chapter: [docs/17-laravel-to-nodejs.md](docs/17-laravel-to-nodejs.md).
 

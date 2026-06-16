@@ -2,7 +2,7 @@
 
 ## What it is
 
-**Authorization** answers "are you allowed to do this?" — it runs *after* authentication.
+**Authorization** answers "are you allowed to do this?" — it runs _after_ authentication.
 This project combines two checks:
 
 - **Role-based**: users have a role (`USER` or `ADMIN`); some routes require `ADMIN`.
@@ -51,12 +51,12 @@ services, not the controllers.
 
 ## Laravel comparison
 
-| Laravel | This project |
-| --- | --- |
-| Gates (`Gate::allows`) | role middleware + service checks |
-| Policies (`ProjectPolicy`) | ownership checks in services |
-| `$this->authorize('update', $project)` | `getOwnedProject(id, user)` |
-| Roles via Spatie permission | `role` enum on `User` |
+| Laravel                                | This project                     |
+| -------------------------------------- | -------------------------------- |
+| Gates (`Gate::allows`)                 | role middleware + service checks |
+| Policies (`ProjectPolicy`)             | ownership checks in services     |
+| `$this->authorize('update', $project)` | `getOwnedProject(id, user)`      |
+| Roles via Spatie permission            | `role` enum on `User`            |
 
 ## Common beginner mistakes
 

@@ -2,12 +2,12 @@
 
 ## Docker Compose
 
-| Command | Does |
-| --- | --- |
-| `docker compose up -d` | Start in background |
-| `docker compose ps` | Status |
-| `docker compose logs -f` | Follow logs |
-| `docker compose down` | Stop |
+| Command                  | Does                |
+| ------------------------ | ------------------- |
+| `docker compose up -d`   | Start in background |
+| `docker compose ps`      | Status              |
+| `docker compose logs -f` | Follow logs         |
+| `docker compose down`    | Stop                |
 | `docker compose down -v` | Stop + wipe volumes |
 
 ## Build & run
@@ -56,7 +56,7 @@ logger.info({ userId }, 'user logged in');
 
 ## Dev vs prod migrations
 
-| Env | Command |
-| --- | --- |
-| Dev | `prisma migrate dev` |
+| Env     | Command                 |
+| ------- | ----------------------- |
+| Dev     | `prisma migrate dev`    |
 | Prod/CI | `prisma migrate deploy` |

@@ -6,5 +6,7 @@ import { env } from './env.js';
 export const logger = pino({
   level: env.LOG_LEVEL,
   transport:
-    env.NODE_ENV === 'development' ? { target: 'pino-pretty', options: { colorize: true } } : undefined,
+    env.NODE_ENV === 'development'
+      ? { target: 'pino-pretty', options: { colorize: true } }
+      : undefined,
 });

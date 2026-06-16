@@ -15,12 +15,12 @@ with the browser dev tools or `curl`.
 
 ## Key concepts
 
-| Concept | Meaning |
-| --- | --- |
-| Method | `GET` (read), `POST` (create), `PUT/PATCH` (update), `DELETE` (remove) |
-| Status code | `2xx` success, `3xx` redirect, `4xx` client error, `5xx` server error |
-| Headers | Metadata (`Content-Type`, `Authorization`, ...) |
-| Body | The payload (usually JSON) |
+| Concept     | Meaning                                                                          |
+| ----------- | -------------------------------------------------------------------------------- |
+| Method      | `GET` (read), `POST` (create), `PUT/PATCH` (update), `DELETE` (remove)           |
+| Status code | `2xx` success, `3xx` redirect, `4xx` client error, `5xx` server error            |
+| Headers     | Metadata (`Content-Type`, `Authorization`, ...)                                  |
+| Body        | The payload (usually JSON)                                                       |
 | Idempotency | Same request, same effect (`GET`, `PUT`, `DELETE` are idempotent; `POST` is not) |
 
 Common status codes: `200 OK`, `201 Created`, `204 No Content`, `400 Bad Request`,

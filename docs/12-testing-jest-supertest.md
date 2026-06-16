@@ -51,12 +51,12 @@ auth, validation, and ownership.
 
 ## Laravel comparison
 
-| Laravel | This project |
-| --- | --- |
-| PHPUnit / Pest | Jest |
-| `$this->post('/users', ...)` | `request(app).post('/users')` |
-| `assertStatus(201)` | `expect(res.status).toBe(201)` |
-| `RefreshDatabase` trait | a clean test DB / truncate between tests |
+| Laravel                      | This project                             |
+| ---------------------------- | ---------------------------------------- |
+| PHPUnit / Pest               | Jest                                     |
+| `$this->post('/users', ...)` | `request(app).post('/users')`            |
+| `assertStatus(201)`          | `expect(res.status).toBe(201)`           |
+| `RefreshDatabase` trait      | a clean test DB / truncate between tests |
 
 The feel is nearly identical — fire an HTTP request, assert on the response.
 

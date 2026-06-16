@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
 - Initial project scaffold: README, docs (00–18), cheatsheets, and runnable examples.
 - Task Manager API with `auth`, `users`, `projects`, and `tasks` modules.
 - TypeScript (strict), Express, Prisma + PostgreSQL, Zod, JWT, bcrypt, pino.

@@ -13,7 +13,9 @@ export async function resetDatabase(): Promise<void> {
 
 // Register a user and return a valid Bearer token.
 export async function registerAndLogin(email: string): Promise<string> {
-  await request(app).post('/auth/register').send({ name: 'Test User', email, password: 'password123' });
+  await request(app)
+    .post('/auth/register')
+    .send({ name: 'Test User', email, password: 'password123' });
   const res = await request(app).post('/auth/login').send({ email, password: 'password123' });
   return res.body.token as string;
 }

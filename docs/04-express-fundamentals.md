@@ -13,13 +13,13 @@ Express is the most widely used Node web framework. Understanding its middleware
 
 ## Core building blocks
 
-| Piece | Role |
-| --- | --- |
-| `app` | The application instance |
-| `Router` | Groups related routes |
-| Middleware | `(req, res, next) => {}` — runs in order |
-| Route handler | Final middleware that responds |
-| Error middleware | `(err, req, res, next) => {}` — 4 args |
+| Piece            | Role                                     |
+| ---------------- | ---------------------------------------- |
+| `app`            | The application instance                 |
+| `Router`         | Groups related routes                    |
+| Middleware       | `(req, res, next) => {}` — runs in order |
+| Route handler    | Final middleware that responds           |
+| Error middleware | `(err, req, res, next) => {}` — 4 args   |
 
 ## How it appears in real Node.js jobs
 
@@ -52,17 +52,17 @@ app.listen(3000);
 
 [src/app.ts](../src/app.ts) builds the app: it adds `express.json()`, request logging
 (pino-http), mounts each module's router (`/auth`, `/users`, `/projects`, `/tasks`), then
-adds the **not-found** and **error** middleware *last* (order matters). `server.ts`
+adds the **not-found** and **error** middleware _last_ (order matters). `server.ts`
 calls `listen`. This split lets tests import `app` without opening a port.
 
 ## Laravel comparison
 
-| Laravel | Express |
-| --- | --- |
-| `routes/api.php` | `Router` in `*.routes.ts` |
-| `app/Http/Middleware/*` | functions in `src/middlewares/` |
+| Laravel                           | Express                          |
+| --------------------------------- | -------------------------------- |
+| `routes/api.php`                  | `Router` in `*.routes.ts`        |
+| `app/Http/Middleware/*`           | functions in `src/middlewares/`  |
 | Global middleware in `Kernel.php` | `app.use(...)` order in `app.ts` |
-| Controller methods | route handler functions |
+| Controller methods                | route handler functions          |
 
 Express middleware is just a function; Laravel middleware is a class with `handle()`. Same
 idea, different shape.

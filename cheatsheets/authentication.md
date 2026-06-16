@@ -4,8 +4,8 @@
 
 ```ts
 import bcrypt from 'bcryptjs';
-const hash = await bcrypt.hash(plain, 10);     // on register
-const ok = await bcrypt.compare(plain, hash);  // on login
+const hash = await bcrypt.hash(plain, 10); // on register
+const ok = await bcrypt.compare(plain, hash); // on login
 ```
 
 ## JWT
@@ -13,7 +13,7 @@ const ok = await bcrypt.compare(plain, hash);  // on login
 ```ts
 import jwt from 'jsonwebtoken';
 const token = jwt.sign({ sub: user.id, role: user.role }, SECRET, { expiresIn: '1d' });
-const payload = jwt.verify(token, SECRET);     // throws if invalid/expired
+const payload = jwt.verify(token, SECRET); // throws if invalid/expired
 ```
 
 ## Bearer header
@@ -58,11 +58,11 @@ if (resource.ownerId !== user.id && user.role !== 'ADMIN') {
 
 ## Status codes
 
-| Case | Code |
-| --- | --- |
-| No / invalid token | `401` |
+| Case                          | Code  |
+| ----------------------------- | ----- |
+| No / invalid token            | `401` |
 | Authenticated but not allowed | `403` |
-| Bad credentials on login | `401` |
+| Bad credentials on login      | `401` |
 
 ## Don'ts
 

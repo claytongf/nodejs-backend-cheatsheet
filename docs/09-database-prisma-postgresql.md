@@ -72,13 +72,13 @@ of services and controllers.
 
 ## Laravel comparison
 
-| Laravel / Eloquent | Prisma |
-| --- | --- |
-| `php artisan make:migration` | edit `schema.prisma` |
-| `php artisan migrate` | `prisma migrate dev` |
-| `User::find($id)` | `prisma.user.findUnique({ where: { id } })` |
-| `$user->projects` (lazy) | `include: { projects: true }` (explicit) |
-| `php artisan tinker` | `prisma studio` |
+| Laravel / Eloquent           | Prisma                                      |
+| ---------------------------- | ------------------------------------------- |
+| `php artisan make:migration` | edit `schema.prisma`                        |
+| `php artisan migrate`        | `prisma migrate dev`                        |
+| `User::find($id)`            | `prisma.user.findUnique({ where: { id } })` |
+| `$user->projects` (lazy)     | `include: { projects: true }` (explicit)    |
+| `php artisan tinker`         | `prisma studio`                             |
 
 Big difference: Eloquent uses lazy-loading (easy N+1); Prisma makes relation loading
 **explicit** via `include`/`select`, which is safer by default.

@@ -18,17 +18,17 @@ proper auth/authz, and secret management. Security review is part of code review
 
 ## Checklist of controls (and where this project does them)
 
-| Threat | Control | Where |
-| --- | --- | --- |
-| Injection / bad input | Zod validation | `*.schemas.ts` + validate middleware |
-| Credential theft | bcrypt password hashing | `auth.service.ts` |
-| Forged identity | JWT signature verification | `auth.middleware.ts` |
-| Broken access control (IDOR) | role + ownership checks | services |
-| Secret leakage | env validation, `.env` git-ignored | `config/env.ts`, `.gitignore` |
-| Info leakage | safe error responses | `error.middleware.ts` |
-| (Recommended) Header attacks | `helmet` | add in `app.ts` |
-| (Recommended) Brute force | rate limiting | add in `app.ts` |
-| (Recommended) Cross-origin | configured CORS | add in `app.ts` |
+| Threat                       | Control                            | Where                                |
+| ---------------------------- | ---------------------------------- | ------------------------------------ |
+| Injection / bad input        | Zod validation                     | `*.schemas.ts` + validate middleware |
+| Credential theft             | bcrypt password hashing            | `auth.service.ts`                    |
+| Forged identity              | JWT signature verification         | `auth.middleware.ts`                 |
+| Broken access control (IDOR) | role + ownership checks            | services                             |
+| Secret leakage               | env validation, `.env` git-ignored | `config/env.ts`, `.gitignore`        |
+| Info leakage                 | safe error responses               | `error.middleware.ts`                |
+| (Recommended) Header attacks | `helmet`                           | add in `app.ts`                      |
+| (Recommended) Brute force    | rate limiting                      | add in `app.ts`                      |
+| (Recommended) Cross-origin   | configured CORS                    | add in `app.ts`                      |
 
 ## Simple code example
 
@@ -50,13 +50,13 @@ step.
 
 ## Laravel comparison
 
-| Laravel | Node equivalent |
-| --- | --- |
-| CSRF middleware (web) | Not needed for stateless token APIs; use SameSite/CORS |
-| `$fillable`/`$guarded` mass-assignment guard | Zod schemas (only accept known fields) |
-| `Hash`, `bcrypt` | `bcryptjs` |
-| `.env` + `config()` | `.env` + validated `config/env.ts` |
-| Throttling middleware | `express-rate-limit` |
+| Laravel                                      | Node equivalent                                        |
+| -------------------------------------------- | ------------------------------------------------------ |
+| CSRF middleware (web)                        | Not needed for stateless token APIs; use SameSite/CORS |
+| `$fillable`/`$guarded` mass-assignment guard | Zod schemas (only accept known fields)                 |
+| `Hash`, `bcrypt`                             | `bcryptjs`                                             |
+| `.env` + `config()`                          | `.env` + validated `config/env.ts`                     |
+| Throttling middleware                        | `express-rate-limit`                                   |
 
 ## Common beginner mistakes
 

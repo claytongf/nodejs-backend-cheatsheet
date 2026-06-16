@@ -50,12 +50,12 @@ middleware before their controllers.
 
 ## Laravel comparison
 
-| Laravel | This project |
-| --- | --- |
+| Laravel                          | This project                     |
+| -------------------------------- | -------------------------------- |
 | `Hash::make()` / `Hash::check()` | `bcrypt.hash` / `bcrypt.compare` |
-| Sanctum / Passport tokens | `jsonwebtoken` |
-| `auth:sanctum` middleware | `auth.middleware.ts` |
-| `Auth::user()` | `req.user` |
+| Sanctum / Passport tokens        | `jsonwebtoken`                   |
+| `auth:sanctum` middleware        | `auth.middleware.ts`             |
+| `Auth::user()`                   | `req.user`                       |
 
 Laravel Sanctum often stores tokens in the DB; classic JWT is stateless (nothing stored
 server-side), which is simpler to scale but harder to revoke.

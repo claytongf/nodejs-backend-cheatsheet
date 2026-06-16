@@ -68,13 +68,13 @@ for (const signal of ['SIGTERM', 'SIGINT']) {
 
 ## Laravel comparison
 
-| Laravel | Node / Docker |
-| --- | --- |
-| Laravel Sail | `docker-compose.yml` |
-| `php artisan migrate --force` | `prisma migrate deploy` |
-| `.env` per environment | `.env` / container env vars |
-| Forge / Vapor deploy | Docker image + orchestrator |
-| `storage/logs/laravel.log` | pino JSON logs to stdout |
+| Laravel                       | Node / Docker               |
+| ----------------------------- | --------------------------- |
+| Laravel Sail                  | `docker-compose.yml`        |
+| `php artisan migrate --force` | `prisma migrate deploy`     |
+| `.env` per environment        | `.env` / container env vars |
+| Forge / Vapor deploy          | Docker image + orchestrator |
+| `storage/logs/laravel.log`    | pino JSON logs to stdout    |
 
 ## Common beginner mistakes
 

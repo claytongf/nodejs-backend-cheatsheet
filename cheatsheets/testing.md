@@ -2,20 +2,26 @@
 
 ## Run
 
-| Command | Does |
-| --- | --- |
-| `npm test` | Run all tests |
-| `npm run test:watch` | Watch mode |
-| `npx jest path/to/file` | Run one file |
-| `npx jest -t "name"` | Run tests matching name |
+| Command                 | Does                    |
+| ----------------------- | ----------------------- |
+| `npm test`              | Run all tests           |
+| `npm run test:watch`    | Watch mode              |
+| `npx jest path/to/file` | Run one file            |
+| `npx jest -t "name"`    | Run tests matching name |
 
 ## Structure
 
 ```ts
 describe('feature', () => {
-  beforeAll(async () => { /* setup */ });
-  afterAll(async () => { await prisma.$disconnect(); });
-  beforeEach(async () => { /* reset DB */ });
+  beforeAll(async () => {
+    /* setup */
+  });
+  afterAll(async () => {
+    await prisma.$disconnect();
+  });
+  beforeEach(async () => {
+    /* reset DB */
+  });
 
   it('does the thing', () => {
     expect(2 + 2).toBe(4);
@@ -25,15 +31,15 @@ describe('feature', () => {
 
 ## Common matchers
 
-| Matcher | Checks |
-| --- | --- |
-| `toBe(x)` | Strict equality |
-| `toEqual(obj)` | Deep equality |
-| `toBeUndefined()` | Is undefined |
-| `toBeTruthy()` / `toBeFalsy()` | Truthiness |
-| `toContain(x)` | Array/string contains |
-| `toHaveProperty('k')` | Object has key |
-| `rejects.toThrow()` | Async throws |
+| Matcher                        | Checks                |
+| ------------------------------ | --------------------- |
+| `toBe(x)`                      | Strict equality       |
+| `toEqual(obj)`                 | Deep equality         |
+| `toBeUndefined()`              | Is undefined          |
+| `toBeTruthy()` / `toBeFalsy()` | Truthiness            |
+| `toContain(x)`                 | Array/string contains |
+| `toHaveProperty('k')`          | Object has key        |
+| `rejects.toThrow()`            | Async throws          |
 
 ## Supertest (HTTP)
 
@@ -41,9 +47,7 @@ describe('feature', () => {
 import request from 'supertest';
 import { app } from '../app.js';
 
-const res = await request(app)
-  .post('/auth/login')
-  .send({ email, password });
+const res = await request(app).post('/auth/login').send({ email, password });
 
 expect(res.status).toBe(200);
 expect(res.body.token).toBeDefined();
