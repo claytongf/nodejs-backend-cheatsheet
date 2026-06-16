@@ -1,39 +1,33 @@
 import type { Request, Response } from 'express';
-import { tasksService } from './tasks.service.js';
+import { projectsService } from './projects.service.js';
 import { requireUser } from '../../shared/utils/auth-context.js';
 
 export async function create(req: Request, res: Response): Promise<void> {
   const actor = requireUser(req);
-  const task = await tasksService.create(actor, req.body);
-  res.status(201).json(task);
+  const project = await projectsService.create(actor, req.body);
+  res.status(201).json(project);
 }
 
 export async function list(req: Request, res: Response): Promise<void> {
   const actor = requireUser(req);
-  const tasks = await tasksService.list(actor);
-  res.json(tasks);
+  const projects = await projectsService.list(actor);
+  res.json(projects);
 }
 
 export async function getById(req: Request, res: Response): Promise<void> {
   const actor = requireUser(req);
-  const task = await tasksService.getById(req.params.id, actor);
-  res.json(task);
+  const project = await projectsService.getById(req.params.id, actor);
+  res.json(project);
 }
 
 export async function update(req: Request, res: Response): Promise<void> {
   const actor = requireUser(req);
-  const task = await tasksService.update(req.params.id, req.body, actor);
-  res.json(task);
-}
-
-export async function complete(req: Request, res: Response): Promise<void> {
-  const actor = requireUser(req);
-  const task = await tasksService.complete(req.params.id, actor);
-  res.json(task);
+  const project = await projectsService.update(req.params.id, req.body, actor);
+  res.json(project);
 }
 
 export async function remove(req: Request, res: Response): Promise<void> {
   const actor = requireUser(req);
-  await tasksService.remove(req.params.id, actor);
+  await projectsService.remove(req.params.id, actor);
   res.status(204).end();
 }

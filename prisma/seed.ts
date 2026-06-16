@@ -1,6 +1,7 @@
-// Seed script: creates a demo admin and a demo user, plus a couple of sample tasks.
+// Seed script: creates a demo admin, a demo user, and some sample data.
 // Run: npm run db:seed
 // Login with admin@demo.test / password123 or user@demo.test / password123
+
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 
@@ -21,20 +22,18 @@ async function main() {
     create: { name: 'Demo User', email: 'user@demo.test', passwordHash },
   });
 
-  if ((await prisma.task.count()) === 0) {
-    await prisma.task.createMany({
-      data: [
-        { title: 'Read the documentation' },
-        { title: 'Build the Task Manager API', status: 'IN_PROGRESS' },
-      ],
+  // Only seed sample content if the demo user has no projects yet.
+  const existingProjects = await prisma.project.count({ where: { ownerId: user.id } });
+  if (existingProjects === 0) {
+    const project = await prisma.project.create({
+      data: { name: 'Sample Project', description: 'A seeded project', ownerId: user.id },
+    });
+    await prisma.task.create({
+      data: { title: 'Read the docs', projectId: project.id, ownerId: user.id },
     });
   }
 
-  console.log('Seed complete:', {
-    admin: admin.email,
-    user: user.email,
-    tasks: await prisma.task.count(),
-  });
+  console.log('Seed complete:', { admin: admin.email, user: user.email });
 }
 
 main()

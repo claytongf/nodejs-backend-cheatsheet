@@ -28,9 +28,9 @@ development with TypeScript. Documentation is in **English** and (in later phase
 | Formatting | Prettier |
 | Editor config | EditorConfig |
 
-More of the stack (JWT, Jest, Docker production setup, ...) arrives in later phases.
+More of the stack (Jest tests, Docker production setup, ...) arrives in later phases.
 
-## API (so far)
+## API
 
 | Method | Path | Auth | Description |
 | --- | --- | --- | --- |
@@ -38,17 +38,29 @@ More of the stack (JWT, Jest, Docker production setup, ...) arrives in later pha
 | POST | `/auth/register` | — | Register a new user, returns a JWT |
 | POST | `/auth/login` | — | Log in, returns a JWT |
 | GET | `/auth/me` | ✅ | Current authenticated user |
-| GET | `/tasks` | — | List tasks |
-| POST | `/tasks` | — | Create a task |
-| GET | `/tasks/:id` | — | Get a task |
-| PATCH | `/tasks/:id` | — | Update a task |
-| PATCH | `/tasks/:id/complete` | — | Mark a task complete |
-| DELETE | `/tasks/:id` | — | Delete a task |
+| GET | `/users` | ✅ admin | List users |
+| GET | `/users/:id` | ✅ | Get a user |
+| PATCH | `/users/:id` | ✅ | Update a user (self or admin) |
+| DELETE | `/users/:id` | ✅ admin | Delete a user |
+| POST | `/projects` | ✅ | Create a project |
+| GET | `/projects` | ✅ | List your projects (admin: all) |
+| GET | `/projects/:id` | ✅ | Get a project (owner/admin) |
+| PATCH | `/projects/:id` | ✅ | Update a project (owner/admin) |
+| DELETE | `/projects/:id` | ✅ | Delete a project (owner/admin) |
+| POST | `/tasks` | ✅ | Create a task in a project you own |
+| GET | `/tasks` | ✅ | List your tasks (admin: all) |
+| GET | `/tasks/:id` | ✅ | Get a task (owner/admin) |
+| PATCH | `/tasks/:id` | ✅ | Update a task (owner/admin) |
+| PATCH | `/tasks/:id/complete` | ✅ | Mark a task complete (owner/admin) |
+| DELETE | `/tasks/:id` | ✅ | Delete a task (owner/admin) |
 
-Request bodies are validated with **Zod** (invalid input → `422` with field-level errors).
-Tasks are now persisted in **PostgreSQL via Prisma**. Ownership/auth arrive in later phases.
-Unknown routes return a `404`; typed errors and unexpected `500`s are formatted by the
-centralized error middleware.
+Authentication uses **JWT** (`Authorization: Bearer <token>`). Authorization combines
+**role checks** (`USER` / `ADMIN`) with **ownership checks** (you can only access your own
+projects/tasks; admins may access any). Request bodies are validated with **Zod** (invalid
+input → `422`). Data is persisted in **PostgreSQL via Prisma**. Unknown routes return a
+`404`; typed errors and unexpected `500`s are formatted by the centralized error middleware.
+
+Seeded logins: `admin@demo.test` / `password123` (admin) and `user@demo.test` / `password123` (user).
 
 ## Getting started
 
@@ -95,11 +107,15 @@ nodejs-backend-cheatsheet/
 │   ├── server.ts         # starts the HTTP server
 │   ├── database/         # shared Prisma client
 │   ├── modules/          # feature modules (layered)
-│   │   └── tasks/        # routes · controller · service · repository · schemas · types
-│   ├── middlewares/      # validate · not-found · error
+│   │   ├── auth/         # register · login · me
+│   │   ├── users/        # routes · controller · service · repository · schemas · types
+│   │   ├── projects/     # (same layered structure)
+│   │   └── tasks/        # (same layered structure)
+│   ├── middlewares/      # auth · validate · not-found · error
 │   └── shared/
 │       ├── errors/       # typed AppError hierarchy
-│       └── utils/        # asyncHandler
+│       ├── types/        # AuthUser + Express Request augmentation
+│       └── utils/        # asyncHandler · password (bcrypt) · jwt · auth-context
 ├── docker-compose.yml
 ├── package.json
 ├── tsconfig.json

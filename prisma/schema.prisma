@@ -1,9 +1,6 @@
 // Prisma schema for the Task Manager API.
 // Docs: https://www.prisma.io/docs
 // After editing, run: npm run prisma:migrate
-//
-// This phase adds the User model and the Role enum for authentication.
-// Ownership relations (Project, and task/project owners) are added in the next phase.
 
 generator client {
   provider = "prisma-client-js"
@@ -26,13 +23,28 @@ enum TaskStatus {
 }
 
 model User {
-  id           String   @id @default(uuid())
+  id           String    @id @default(uuid())
   name         String
-  email        String   @unique
+  email        String    @unique
   passwordHash String
-  role         Role     @default(USER)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  role         Role      @default(USER)
+  projects     Project[]
+  tasks        Task[]
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Project {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  owner       User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  ownerId     String
+  tasks       Task[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([ownerId])
 }
 
 model Task {
@@ -40,6 +52,13 @@ model Task {
   title       String
   description String?
   status      TaskStatus @default(TODO)
+  project     Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId   String
+  owner       User       @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  ownerId     String
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
+
+  @@index([ownerId])
+  @@index([projectId])
 }

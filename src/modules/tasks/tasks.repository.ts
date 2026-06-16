@@ -1,24 +1,39 @@
-// Data access for tasks. The ONLY layer that touches Prisma.
-// Swapping the in-memory store for Prisma did not require any change to the
-// service or controller — that is the payoff of the layered architecture.
+// The only place that touches prisma.task.
+import type { TaskStatus } from '@prisma/client';
 import { prisma } from '../../database/prisma.js';
-import type { CreateTaskInput, UpdateTaskInput } from './tasks.schemas.js';
+import type { UpdateTaskInput } from './tasks.schemas.js';
+
+export interface CreateTaskData {
+  title: string;
+  description?: string;
+  status?: TaskStatus;
+  projectId: string;
+  ownerId: string;
+}
 
 export const tasksRepository = {
-  findAll() {
+  findMany() {
     return prisma.task.findMany({ orderBy: { createdAt: 'desc' } });
+  },
+
+  findByOwner(ownerId: string) {
+    return prisma.task.findMany({ where: { ownerId }, orderBy: { createdAt: 'desc' } });
   },
 
   findById(id: string) {
     return prisma.task.findUnique({ where: { id } });
   },
 
-  create(input: CreateTaskInput) {
-    return prisma.task.create({ data: input });
+  create(data: CreateTaskData) {
+    return prisma.task.create({ data });
   },
 
-  update(id: string, input: UpdateTaskInput) {
-    return prisma.task.update({ where: { id }, data: input });
+  update(id: string, data: UpdateTaskInput) {
+    return prisma.task.update({ where: { id }, data });
+  },
+
+  setStatus(id: string, status: TaskStatus) {
+    return prisma.task.update({ where: { id }, data: { status } });
   },
 
   delete(id: string) {
