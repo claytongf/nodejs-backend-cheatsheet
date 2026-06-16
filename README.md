@@ -24,11 +24,25 @@ development with TypeScript. Documentation is in **English** and (in later phase
 | ORM | Prisma |
 | Database | PostgreSQL |
 | Auth | JWT + bcrypt |
+| Logging | pino + pino-http |
+| Security | helmet, CORS, rate limiting |
+| Testing | Jest + Supertest |
 | Linting | ESLint |
 | Formatting | Prettier |
 | Editor config | EditorConfig |
+| Infra | Docker Compose (PostgreSQL + Redis) |
 
-More of the stack (Jest tests, Docker production setup, ...) arrives in later phases.
+## Production readiness
+
+- **Environment validation** at startup with Zod (`src/config/env.ts`) — the app refuses to
+  boot with invalid config (fail fast).
+- **Security headers** via `helmet`, configurable **CORS**, and **rate limiting**.
+- **Structured logging** with `pino` (pretty in dev, JSON in production) and per-request
+  logs via `pino-http`.
+- **Graceful shutdown** on `SIGTERM`/`SIGINT` (closes the HTTP server and the Prisma client).
+- A `/health` endpoint for load balancers and orchestrators.
+
+See [docs/15-docker-and-production.md](docs/15-docker-and-production.md) for the full guide.
 
 ## API
 

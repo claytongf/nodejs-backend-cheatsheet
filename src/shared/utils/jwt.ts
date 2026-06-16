@@ -1,27 +1,18 @@
-// Sign and verify JSON Web Tokens.
-// The secret is read from process.env here; a later phase replaces this with a
-// validated environment config that fails fast at startup.
+// Sign and verify JSON Web Tokens. The secret comes from validated env.
 import jwt, { type SignOptions } from 'jsonwebtoken';
 import type { Role } from '@prisma/client';
+import { env } from '../../config/env.js';
 
 export interface JwtPayload {
   sub: string; // user id
   role: Role;
 }
 
-function getSecret(): string {
-  const secret = process.env.JWT_SECRET;
-  if (!secret) {
-    throw new Error('JWT_SECRET is not set');
-  }
-  return secret;
-}
-
 export function signToken(payload: JwtPayload): string {
-  const expiresIn = (process.env.JWT_EXPIRES_IN ?? '1d') as SignOptions['expiresIn'];
-  return jwt.sign(payload, getSecret(), { expiresIn });
+  const options: SignOptions = { expiresIn: env.JWT_EXPIRES_IN as SignOptions['expiresIn'] };
+  return jwt.sign(payload, env.JWT_SECRET, options);
 }
 
 export function verifyToken(token: string): JwtPayload {
-  return jwt.verify(token, getSecret()) as JwtPayload;
+  return jwt.verify(token, env.JWT_SECRET) as JwtPayload;
 }

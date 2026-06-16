@@ -1,7 +1,12 @@
 // Builds and configures the Express application (but does NOT start listening).
-// Keeping this separate from server.ts lets tests import `app` directly later
-// (e.g. with Supertest) without binding to a port.
+// Keeping this separate from server.ts lets tests import `app` directly with Supertest.
 import express, { type Request, type Response } from 'express';
+import helmet from 'helmet';
+import cors from 'cors';
+import rateLimit from 'express-rate-limit';
+import { pinoHttp } from 'pino-http';
+import { env } from './config/env.js';
+import { logger } from './config/logger.js';
 import { authRouter } from './modules/auth/auth.routes.js';
 import { usersRouter } from './modules/users/users.routes.js';
 import { projectsRouter } from './modules/projects/projects.routes.js';
@@ -12,10 +17,25 @@ import { errorMiddleware } from './middlewares/error.middleware.js';
 export function createApp() {
   const app = express();
 
-  // Parse incoming JSON request bodies into req.body.
-  app.use(express.json());
+  // Security & cross-origin:
+  app.use(helmet()); // safe HTTP response headers
+  app.use(cors()); // allow cross-origin requests (tighten the origin in production)
 
-  // Health check: no dependencies, handy for load balancers and tests.
+  // Body parsing and structured request logging:
+  app.use(express.json());
+  app.use(pinoHttp({ logger }));
+
+  // Basic rate limiting (relaxed in tests so the suite is not throttled):
+  app.use(
+    rateLimit({
+      windowMs: 60_000,
+      max: env.NODE_ENV === 'test' ? 1000 : 100,
+      standardHeaders: true,
+      legacyHeaders: false,
+    }),
+  );
+
+  // Health check (no auth).
   app.get('/health', (_req: Request, res: Response) => {
     res.json({ status: 'ok', uptime: process.uptime() });
   });
@@ -26,8 +46,7 @@ export function createApp() {
   app.use('/projects', projectsRouter);
   app.use('/tasks', tasksRouter);
 
-  // 404 fallback, then the centralized error handler — ORDER MATTERS:
-  // these must come AFTER all routes.
+  // 404 fallback, then the centralized error handler — ORDER MATTERS (must be last).
   app.use(notFoundMiddleware);
   app.use(errorMiddleware);
 
