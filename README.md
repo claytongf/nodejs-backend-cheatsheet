@@ -11,7 +11,7 @@ A study guide, cheat sheet, and working API example for learning modern Node.js 
 development with TypeScript. Documentation is in **English** and (in later phases) includes
 **Laravel → Node.js** comparisons for developers coming from PHP/Laravel.
 
-## Tech stack (foundation)
+## Tech stack (so far)
 
 | Area | Tool |
 | --- | --- |
@@ -25,6 +25,15 @@ development with TypeScript. Documentation is in **English** and (in later phase
 | Editor config | EditorConfig |
 
 More of the stack (Prisma, PostgreSQL, Zod, JWT, Jest, Docker, ...) arrives in later phases.
+
+## API (so far)
+
+| Method | Path | Description |
+| --- | --- | --- |
+| GET | `/health` | Health check (`{ "status": "ok" }`) |
+
+Unknown routes return a `404` with a JSON message; unexpected errors return a `500` from
+the centralized error middleware.
 
 ## Getting started
 
@@ -50,7 +59,11 @@ npm run dev
 ```text
 nodejs-backend-cheatsheet/
 ├── src/
-│   └── index.ts          # temporary entry point (replaced next phase)
+│   ├── app.ts            # builds the Express app (no listening)
+│   ├── server.ts         # starts the HTTP server
+│   └── middlewares/
+│       ├── not-found.middleware.ts
+│       └── error.middleware.ts
 ├── package.json
 ├── tsconfig.json
 ├── eslint.config.js
