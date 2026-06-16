@@ -5,8 +5,11 @@ import helmet from 'helmet';
 import cors from 'cors';
 import rateLimit from 'express-rate-limit';
 import { pinoHttp } from 'pino-http';
+import swaggerUi from 'swagger-ui-express';
 import { env } from './config/env.js';
 import { logger } from './config/logger.js';
+import { openapiSpec } from './config/swagger.js';
+import { landingPage } from './web/landing.js';
 import { authRouter } from './modules/auth/auth.routes.js';
 import { usersRouter } from './modules/users/users.routes.js';
 import { projectsRouter } from './modules/projects/projects.routes.js';
@@ -17,8 +20,20 @@ import { errorMiddleware } from './middlewares/error.middleware.js';
 export function createApp() {
   const app = express();
 
-  // Security & cross-origin:
-  app.use(helmet()); // safe HTTP response headers
+  // Security & cross-origin. The Content-Security-Policy is relaxed just enough for
+  // Swagger UI (which uses inline styles/scripts) to render at /api-docs.
+  app.use(
+    helmet({
+      contentSecurityPolicy: {
+        directives: {
+          ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+          'script-src': ["'self'", "'unsafe-inline'"],
+          'style-src': ["'self'", "'unsafe-inline'", 'https:'],
+          'img-src': ["'self'", 'data:', 'https:'],
+        },
+      },
+    }),
+  );
   app.use(cors()); // allow cross-origin requests (tighten the origin in production)
 
   // Body parsing and structured request logging:
@@ -32,6 +47,19 @@ export function createApp() {
       max: env.NODE_ENV === 'test' ? 1000 : 100,
       standardHeaders: true,
       legacyHeaders: false,
+    }),
+  );
+
+  // Minimal browser interfaces (not a frontend app):
+  // a static landing page and interactive API docs.
+  app.get('/', (_req: Request, res: Response) => {
+    res.type('html').send(landingPage);
+  });
+  app.use(
+    '/api-docs',
+    swaggerUi.serve,
+    swaggerUi.setup(openapiSpec, {
+      customSiteTitle: 'Task Manager API — Docs',
     }),
   );
 

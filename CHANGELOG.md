@@ -17,6 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Jest + Supertest integration tests.
 - Docker Compose for PostgreSQL and Redis.
 - GitHub CI workflow (lint, build, test) and issue/PR templates.
+- Minimal browser interfaces: a static landing page at `GET /` and interactive
+  Swagger UI (OpenAPI) at `GET /api-docs` covering all endpoints with request/response
+  examples, Bearer auth, and error responses.
 
 ### Changed
 

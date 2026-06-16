@@ -36,19 +36,20 @@ Most tutorials show you _one_ piece in isolation. Real backend work means wiring
 
 ## 🧰 Tech stack
 
-| Area          | Tool                                        |
-| ------------- | ------------------------------------------- |
-| Runtime       | Node.js LTS                                 |
-| Language      | TypeScript (strict)                         |
-| Web framework | Express                                     |
-| ORM           | Prisma                                      |
-| Database      | PostgreSQL                                  |
-| Validation    | Zod                                         |
-| Auth          | JWT + bcrypt                                |
-| Logging       | pino                                        |
-| Testing       | Jest + Supertest                            |
-| Tooling       | ESLint, Prettier, tsx, dotenv               |
-| Infra         | Docker, Docker Compose (PostgreSQL + Redis) |
+| Area          | Tool                                            |
+| ------------- | ----------------------------------------------- |
+| Runtime       | Node.js LTS                                     |
+| Language      | TypeScript (strict)                             |
+| Web framework | Express                                         |
+| ORM           | Prisma                                          |
+| Database      | PostgreSQL                                      |
+| Validation    | Zod                                             |
+| Auth          | JWT + bcrypt                                    |
+| API docs      | Swagger UI (swagger-ui-express + swagger-jsdoc) |
+| Logging       | pino                                            |
+| Testing       | Jest + Supertest                                |
+| Tooling       | ESLint, Prettier, tsx, dotenv                   |
+| Infra         | Docker, Docker Compose (PostgreSQL + Redis)     |
 
 ## 🎓 What you will learn
 
@@ -76,8 +77,9 @@ nodejs-backend-cheatsheet/
 ├── src/                      # The Task Manager API
 │   ├── app.ts                # Express app (no listen)
 │   ├── server.ts             # Boots the HTTP server
-│   ├── config/               # env + logger
+│   ├── config/               # env, logger, swagger (OpenAPI spec)
 │   ├── database/             # Prisma client
+│   ├── web/                  # minimal landing page (GET /)
 │   ├── middlewares/          # auth, error, validate, not-found
 │   ├── modules/              # auth, users, projects, tasks
 │   ├── shared/               # errors, utils, types
@@ -192,6 +194,22 @@ npm run test:watch   # watch mode
 | PATCH  | `/tasks/:id`          | ✅       | Update a task (owner/admin)    |
 | DELETE | `/tasks/:id`          | ✅       | Delete a task (owner/admin)    |
 | PATCH  | `/tasks/:id/complete` | ✅       | Mark a task complete           |
+
+## 🌐 Browser interfaces
+
+This is a backend project, so the browser surface is intentionally minimal — just enough
+to explore the API. With the server running (`npm run dev`):
+
+| Interface     | URL / command                    | What it is                                         |
+| ------------- | -------------------------------- | -------------------------------------------------- |
+| Landing page  | <http://localhost:3000/>         | A static page describing the project with links    |
+| API docs      | <http://localhost:3000/api-docs> | Interactive Swagger UI (OpenAPI) for all endpoints |
+| Health check  | <http://localhost:3000/health>   | Liveness probe (`{ "status": "ok" }`)              |
+| Prisma Studio | `npm run prisma:studio`          | Visual database browser (opens in your browser)    |
+
+The Swagger UI documents Auth, Users, Projects, and Tasks with request/response examples,
+error responses, and **Bearer token** auth — click **Authorize** and paste a JWT from
+`POST /auth/login` to try protected endpoints directly from the browser.
 
 ## 🗺️ Learning roadmap
 
