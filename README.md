@@ -23,6 +23,7 @@ development with TypeScript. Documentation is in **English** and (in later phase
 | Validation | Zod |
 | ORM | Prisma |
 | Database | PostgreSQL |
+| Auth | JWT + bcrypt |
 | Linting | ESLint |
 | Formatting | Prettier |
 | Editor config | EditorConfig |
@@ -31,15 +32,18 @@ More of the stack (JWT, Jest, Docker production setup, ...) arrives in later pha
 
 ## API (so far)
 
-| Method | Path | Description |
-| --- | --- | --- |
-| GET | `/health` | Health check (`{ "status": "ok" }`) |
-| GET | `/tasks` | List tasks |
-| POST | `/tasks` | Create a task |
-| GET | `/tasks/:id` | Get a task |
-| PATCH | `/tasks/:id` | Update a task |
-| PATCH | `/tasks/:id/complete` | Mark a task complete |
-| DELETE | `/tasks/:id` | Delete a task |
+| Method | Path | Auth | Description |
+| --- | --- | --- | --- |
+| GET | `/health` | — | Health check (`{ "status": "ok" }`) |
+| POST | `/auth/register` | — | Register a new user, returns a JWT |
+| POST | `/auth/login` | — | Log in, returns a JWT |
+| GET | `/auth/me` | ✅ | Current authenticated user |
+| GET | `/tasks` | — | List tasks |
+| POST | `/tasks` | — | Create a task |
+| GET | `/tasks/:id` | — | Get a task |
+| PATCH | `/tasks/:id` | — | Update a task |
+| PATCH | `/tasks/:id/complete` | — | Mark a task complete |
+| DELETE | `/tasks/:id` | — | Delete a task |
 
 Request bodies are validated with **Zod** (invalid input → `422` with field-level errors).
 Tasks are now persisted in **PostgreSQL via Prisma**. Ownership/auth arrive in later phases.

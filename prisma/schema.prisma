@@ -2,8 +2,8 @@
 // Docs: https://www.prisma.io/docs
 // After editing, run: npm run prisma:migrate
 //
-// This phase introduces the Task model. The User and Project models (and the
-// ownership relations) are added in later phases.
+// This phase adds the User model and the Role enum for authentication.
+// Ownership relations (Project, and task/project owners) are added in the next phase.
 
 generator client {
   provider = "prisma-client-js"
@@ -14,10 +14,25 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  USER
+  ADMIN
+}
+
 enum TaskStatus {
   TODO
   IN_PROGRESS
   DONE
+}
+
+model User {
+  id           String   @id @default(uuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         Role     @default(USER)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 model Task {
