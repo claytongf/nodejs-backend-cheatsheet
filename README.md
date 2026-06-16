@@ -113,6 +113,18 @@ Start at [docs/00-roadmap.md](docs/00-roadmap.md) and work through the chapters 
 - [Error handling](cheatsheets/error-handling.md)
 - [Production](cheatsheets/production.md)
 
+## Examples
+
+Small, isolated, runnable examples live in [examples/](examples/) — one concept each
+(Node core, modules, async/await, HTTP server, Express routes, middleware, error handling,
+Zod validation, Prisma CRUD, tests). Run any of them with:
+
+```bash
+npx tsx examples/01-node-core/index.ts
+```
+
+See [examples/README.md](examples/README.md) for the full list and prerequisites.
+
 ## Roadmap
 
 This repository is developed in phases (foundation → Express app → docs → examples →
