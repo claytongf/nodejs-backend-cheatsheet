@@ -253,6 +253,9 @@ prompts, behavioral prep, and scoring rubrics.
 For portfolio preparation, use [docs/portfolio-guide.md](docs/portfolio-guide.md) and
 [docs/project-walkthrough.md](docs/project-walkthrough.md).
 
+For a single map of chapters, examples, labs, interview prep, and source files, use
+[docs/learning-index.md](docs/learning-index.md).
+
 ## 📚 Documentation index
 
 | #   | Chapter                                                                              |

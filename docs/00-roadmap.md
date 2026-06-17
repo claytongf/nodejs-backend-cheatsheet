@@ -14,6 +14,9 @@ If you want a path tailored to your background, start with
 [Study Guide](study-guide.md). It provides tracks for beginners, Laravel/PHP developers,
 junior interviews, mid-level interviews, and fast review.
 
+For a map that connects chapters, examples, labs, interview prep, and real source files,
+use [Learning Index](learning-index.md).
+
 ## The path
 
 ### Stage 1 — Foundations

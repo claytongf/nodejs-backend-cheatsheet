@@ -11,6 +11,8 @@ All contributions must be in **English**.
 
 - Fix typos, clarify explanations, improve examples.
 - Keep the chapter structure (explanation → why → jobs → examples → Laravel comparison → mistakes → best practices → checklist → interview Q&A).
+- Use [docs/chapter-template.md](docs/chapter-template.md) for new or heavily revised chapters.
+- Use [docs/content-quality-checklist.md](docs/content-quality-checklist.md) before opening a pull request.
 
 ### 🧩 New examples
 
@@ -35,6 +37,14 @@ All contributions must be in **English**.
 
 - Open a documentation issue and tell us what was confusing or missing.
 
+### Learning assets
+
+- Add practical exercises under `labs/` when a topic needs hands-on practice.
+- Add interview material under `interview-prep/` when a topic is commonly discussed in
+  job interviews.
+- Keep [docs/learning-index.md](docs/learning-index.md) aligned when adding major learning
+  assets.
+
 ## Development setup
 
 ```bash
@@ -51,7 +61,9 @@ Run the same checks CI runs:
 
 ```bash
 npm run lint
+npm run typecheck
 npm run build
+npm run db:test:setup
 npm test
 ```
 
