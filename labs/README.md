@@ -23,6 +23,9 @@ interview.
 | [04 · Strengthen admin permissions](04-admin-permissions.md) | Intermediate | Authorization and role checks |
 | [05 · Debug a broken test](05-debug-broken-test.md) | Intermediate | Testing and diagnosis |
 | [06 · Production hardening review](06-production-hardening.md) | Advanced | Security and operations |
+| [07 · Cache a read path](07-cache-a-read-path.md) | Advanced (Senior) | Caching & invalidation |
+| [08 · Rate-limit the auth endpoints](08-rate-limit-auth-endpoints.md) | Advanced (Senior) | Reliability & security |
+| [09 · Correlated request logging](09-correlated-request-logging.md) | Advanced (Senior) | Observability |
 
 ## Default Validation
 

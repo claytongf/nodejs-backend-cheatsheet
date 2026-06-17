@@ -61,6 +61,8 @@ same, but the cache becomes shared across processes and survives restarts.
 
 ## Guided Exercise
 
+This is [Lab 07 · Cache a read path](../labs/07-cache-a-read-path.md):
+
 1. In the users module, cache `usersService.getById` reads with a `TtlCache` keyed by
    `user:${id}`.
 2. In `update` and `delete`, call `cache.delete('user:' + id)` to invalidate.

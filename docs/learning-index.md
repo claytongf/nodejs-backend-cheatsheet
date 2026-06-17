@@ -27,10 +27,10 @@ real source files. Use it when studying or when adding new material.
 | Interview review | [18](18-interview-questions.md) | N/A | Mock interviews | All interview prep | Entire repo |
 | Performance & data | [19](19-performance-and-data-access.md) | Pagination on `GET /tasks` | Cookbook #8, Lab 02 | Database/scaling questions | `tasks.repository.ts`, `prisma/schema.prisma` |
 | API design at scale | [20](20-api-design-at-scale.md) | `PaginatedTasks` in Swagger | Senior track | System design prompts | `tasks.service.ts`, `config/swagger.ts` |
-| Reliability | [21](21-reliability-and-resilience.md) | Graceful shutdown, rate limit | Senior track | Resilience questions | `src/server.ts`, `src/app.ts` |
+| Reliability | [21](21-reliability-and-resilience.md) | Graceful shutdown, rate limit | Lab 08 | Resilience questions | `src/server.ts`, `src/app.ts` |
 | Config & secrets | [22](22-configuration-and-secrets.md) | Startup env validation | Cookbook #10 | Security/config questions | `src/config/env.ts`, `.env.example` |
-| Observability | [23](23-observability.md) | Correlation id + pino | Senior track | Observability questions | `src/app.ts`, `src/config/logger.ts` |
-| Caching | [24](24-caching.md) | `TtlCache` utility | Senior track | Caching questions | `src/shared/utils/cache.ts` |
+| Observability | [23](23-observability.md) | Correlation id + pino | Lab 09 | Observability questions | `src/app.ts`, `src/config/logger.ts` |
+| Caching | [24](24-caching.md) | `TtlCache` utility | Lab 07 | Caching questions | `src/shared/utils/cache.ts` |
 | Scaling & architecture | [25](25-scaling-and-architecture.md) | Layered modules | Senior track | Architecture trade-offs | `src/modules/`, `src/middlewares/` |
 
 ## Learning Assets

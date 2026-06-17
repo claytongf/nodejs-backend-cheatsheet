@@ -73,7 +73,8 @@ loops instead of just pausing traffic.
 
 Add a per-route limiter to `POST /auth/login` (e.g. 5/minute) without throttling the rest of
 the API. Acceptance criteria: a test shows the 6th rapid login attempt returns 429, while
-other endpoints are unaffected.
+other endpoints are unaffected. This is
+[Lab 08 · Rate-limit the auth endpoints](../labs/08-rate-limit-auth-endpoints.md).
 
 ## Common Beginner Mistakes
 

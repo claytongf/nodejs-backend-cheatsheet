@@ -58,10 +58,11 @@ logger.child({ reqId }).info('processing');
 
 ## Practical Challenge
 
-Add a `logger.child({ reqId })` to the request (via `req.log`, which pino-http provides) and
-use it inside the tasks service so business-logic logs carry the same correlation id as the
-HTTP log. Acceptance criteria: a single request produces multiple log lines that all share
-one `reqId`.
+Use the per-request logger `req.log` (which pino-http provides, already bound to the
+request's `reqId`) inside the tasks service so business-logic logs carry the same
+correlation id as the HTTP log. Acceptance criteria: a single request produces multiple log
+lines that all share one `reqId`. This is
+[Lab 09 · Correlated request logging](../labs/09-correlated-request-logging.md).
 
 ## Common Beginner Mistakes
 
