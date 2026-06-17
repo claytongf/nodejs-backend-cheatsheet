@@ -26,3 +26,19 @@ the main chapters, or alongside the labs when preparing for job applications.
 
 Good interview preparation is not memorizing lines. It is being able to explain a real
 decision, trade-off, or bug clearly under pressure.
+
+## Senior Track
+
+Junior, mid-level, and senior expectations are interleaved throughout, but if you are
+targeting a senior role, focus on:
+
+- **Senior question tiers** in [question-bank.md](question-bank.md) — performance, reliability,
+  API design at scale, observability, caching, and scaling.
+- **Senior scenarios** in [system-design.md](system-design.md) — scaling the API to 1M users,
+  real-time updates, and safe retries.
+- **Senior challenges** in [debugging-challenges.md](debugging-challenges.md) — event-loop
+  blocking, connection-pool exhaustion, memory leaks, and lost updates.
+
+These map to the senior doc tier (chapters 19–25) and the Senior track in
+[docs/study-guide.md](../docs/study-guide.md). The strongest answers connect each idea to a
+real file in this repo.

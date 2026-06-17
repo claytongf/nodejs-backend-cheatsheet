@@ -28,6 +28,19 @@ Strong answer signals:
 - Explains `await` without saying it blocks the whole process.
 - Connects the answer to Prisma calls in repositories.
 
+### Senior
+
+**Q: A single endpoint makes the whole service slow for everyone. What is happening and how do you fix it?**
+A: Likely synchronous CPU work (a big loop, JSON crunching, crypto) blocking the event
+loop, so no other request can be served. Move it off the main thread: a worker thread, a
+queue/worker process, or a faster algorithm. Confirm with event-loop lag metrics.
+
+Strong answer signals:
+
+- Names the event loop as the shared resource.
+- Distinguishes CPU-bound from I/O-bound work.
+- Mentions worker threads / queues (see [14 · Queues](../docs/14-queues-workers-redis.md)).
+
 ## HTTP and REST
 
 ### Junior
@@ -113,6 +126,21 @@ Strong answer signals:
 - Gives a concrete project/task example.
 - Mentions measuring queries before optimizing.
 
+### Senior
+
+**Q: How do you keep a list endpoint fast as the table grows to millions of rows?**
+A: Paginate with `skip`/`take` and cap the page size; index the columns you filter and sort
+on; return the total via a database `count` (not by loading rows); and watch for offset
+pagination getting slow on deep pages (consider keyset/cursor pagination). Group dependent
+reads/writes in a transaction for consistency.
+
+Strong answer signals:
+
+- Points to `GET /tasks` pagination and `@@index` in `prisma/schema.prisma`.
+- Knows indexes speed reads but cost writes.
+- Mentions connection pooling and reading `EXPLAIN ANALYZE`.
+- Bonus: contrasts offset vs cursor pagination (see [19 · Performance](../docs/19-performance-and-data-access.md)).
+
 ## Authentication and Authorization
 
 ### Junior
@@ -172,6 +200,20 @@ Strong answer signals:
 - Mentions test database isolation.
 - Mentions `401`, `403`, and `422` paths.
 
+### Senior
+
+**Q: A test passes locally but fails intermittently in CI. How do you approach it?**
+A: Treat flakiness as a real bug. Common causes: shared state between tests (fix with
+`resetDatabase` in `beforeEach`), time/ordering assumptions, unawaited promises, or relying
+on insertion order instead of an explicit `orderBy`. Reproduce by running in-band, isolate
+the test, and remove the hidden dependency rather than retrying until green.
+
+Strong answer signals:
+
+- Refuses to "just rerun" or add sleeps.
+- Points to test isolation (`beforeEach(resetDatabase)`) and deterministic ordering.
+- Distinguishes unit vs integration tests and where each belongs (test pyramid).
+
 ## Production
 
 ### Mid-Level
@@ -184,3 +226,103 @@ Strong answer signals:
 
 - Does not list things already present as missing.
 - Prioritizes based on risk.
+
+### Senior
+
+**Q: Walk me through what happens to in-flight requests during a deploy.**
+A: The platform sends `SIGTERM`. A well-behaved service stops accepting new connections,
+lets in-flight requests finish, closes the database connection, then exits — graceful
+shutdown. Without it, the process is killed mid-request and clients see resets.
+
+Strong answer signals:
+
+- Points to `src/server.ts` graceful shutdown.
+- Distinguishes liveness from readiness probes.
+
+## Reliability & Resilience
+
+### Senior
+
+**Q: When should you retry a failed operation, and how?**
+A: Retry only idempotent operations, only on transient errors, with exponential backoff and
+jitter, and a cap. Do not retry non-idempotent writes (risk of duplicates) or 4xx client
+errors (they will fail again).
+
+Strong answer signals:
+
+- Links retries to idempotency ([20 · API design](../docs/20-api-design-at-scale.md)).
+- Mentions jitter to avoid synchronized retry storms.
+
+**Q: Liveness vs readiness probe?**
+A: Liveness asks "is the process alive?" — failing it restarts the pod. Readiness asks "can
+it serve traffic now?" — failing it stops routing without restarting. Using one check for
+both causes restart loops when a dependency is briefly down.
+
+Strong answer signals:
+
+- Notes that the current `/health` is a liveness probe.
+- Would add a DB-checking readiness probe.
+
+## API Design at Scale
+
+### Senior
+
+**Q: What makes an API change breaking, and how do you evolve safely?**
+A: Removing/renaming a field, changing its type, or tightening validation breaks existing
+clients. Evolve additively (optional new fields), keep one error shape and one pagination
+envelope, and version (`/v2`) only for true breaking changes.
+
+Strong answer signals:
+
+- Treats the response shape as a contract.
+- Points to the `{ data, total, page, limit }` envelope and uniform `{ message }` errors.
+
+**Q: Why and how would you make `POST /tasks` idempotent?**
+A: So a client retry (after a timeout) does not create duplicates. Accept an idempotency
+key, store the first result against it, and return that stored result on a repeat — or rely
+on a natural unique constraint.
+
+## Observability
+
+### Senior
+
+**Q: An endpoint is intermittently slow in production. How do you find out why with no debugger?**
+A: Use the three pillars: metrics to spot the latency/error spike, logs filtered by the
+request's correlation id to see the slow step, and traces to see where time went across
+services.
+
+Strong answer signals:
+
+- Points to structured pino logs and the `x-request-id` correlation id in `app.ts`.
+- Separates logs (events) from metrics (aggregates).
+
+## Caching
+
+### Senior
+
+**Q: You add a cache and users start seeing stale data. What went wrong and how do you design it correctly?**
+A: Missing invalidation — writes did not delete/refresh the affected keys. Use cache-aside,
+invalidate on every write that affects a key, key by all inputs (including user id), pick a
+TTL per data type, and use a shared cache (Redis) once you run multiple instances.
+
+Strong answer signals:
+
+- Calls invalidation the hard part.
+- Warns against caching per-user data under a shared key.
+- Raises the thundering-herd problem and a mitigation.
+
+## Scaling & Architecture
+
+### Senior
+
+**Q: How would you scale this API to handle 10x traffic?**
+A: Measure first. Then scale horizontally: run multiple stateless instances (one process per
+core via cluster/PM2/orchestrator) behind a load balancer, keep state in Postgres/Redis,
+add caching and connection pooling, and offload slow work to a queue. The JWT design already
+makes the API stateless, so any instance can serve any request.
+
+Strong answer signals:
+
+- Knows one Node process is single-threaded for JS, so you scale with processes.
+- Ties statelessness to the JWT design.
+- Decides from metrics, not guesses.
