@@ -102,7 +102,35 @@ Best for interviews that expect architecture, trade-off, and debugging skills.
 You should be able to explain why the project uses layered modules, how ownership checks
 prevent IDOR, how tests isolate state, and what you would improve before production.
 
-## Track 5: Fast Review Path
+## Track 5: Senior Interview & Operability Path
+
+Best for engineers moving from mid-level to senior, or interviewing for roles that expect
+ownership of production concerns and architecture judgment.
+
+### Prerequisite
+
+You should already be comfortable with the mid-level track (architecture, database, auth,
+testing, security). This track builds on it.
+
+### Sequence
+
+1. [19 · Performance & data access](19-performance-and-data-access.md)
+2. [20 · API design at scale](20-api-design-at-scale.md)
+3. [21 · Reliability & resilience](21-reliability-and-resilience.md)
+4. [22 · Configuration & secrets](22-configuration-and-secrets.md)
+5. [23 · Observability](23-observability.md)
+6. [24 · Caching](24-caching.md)
+7. [25 · Scaling & architecture judgment](25-scaling-and-architecture.md)
+8. [interview-prep/system-design.md](../interview-prep/system-design.md) — apply it.
+
+### Practice Target
+
+You should be able to take `GET /tasks` from "works" to "works at scale": explain how it
+paginates and indexes, how you would cache it and invalidate the cache, how the service
+stays healthy under load and during deploys, how you would observe it in production, and how
+you would scale the API horizontally. Each claim should point to a real file or chapter.
+
+## Track 6: Fast Review Path
 
 Best when you already know backend development and need quick recall.
 

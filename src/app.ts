@@ -1,5 +1,6 @@
 // Builds and configures the Express application (but does NOT start listening).
 // Keeping this separate from server.ts lets tests import `app` directly with Supertest.
+import { randomUUID } from 'node:crypto';
 import express, { type Request, type Response } from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
@@ -36,9 +37,21 @@ export function createApp() {
   );
   app.use(cors()); // allow cross-origin requests (tighten the origin in production)
 
-  // Body parsing and structured request logging:
+  // Body parsing and structured request logging. Every request gets a correlation id
+  // (reused from an incoming `x-request-id` header, or generated) so logs for a single
+  // request can be traced end to end. The id is also echoed back in the response header.
   app.use(express.json());
-  app.use(pinoHttp({ logger }));
+  app.use(
+    pinoHttp({
+      logger,
+      genReqId: (req, res) => {
+        const incoming = req.headers['x-request-id'];
+        const id = (typeof incoming === 'string' && incoming) || randomUUID();
+        res.setHeader('x-request-id', id);
+        return id;
+      },
+    }),
+  );
 
   // Basic rate limiting (relaxed in tests so the suite is not throttled):
   app.use(

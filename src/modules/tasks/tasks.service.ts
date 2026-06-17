@@ -1,9 +1,10 @@
 // Business logic + ownership authorization for tasks.
+import type { Prisma } from '@prisma/client';
 import { tasksRepository } from './tasks.repository.js';
 import { projectsRepository } from '../projects/projects.repository.js';
 import { NotFoundError, ForbiddenError } from '../../shared/errors/index.js';
 import type { AuthUser } from '../../shared/types/index.js';
-import type { CreateTaskInput, UpdateTaskInput } from './tasks.schemas.js';
+import type { CreateTaskInput, UpdateTaskInput, ListTasksQuery } from './tasks.schemas.js';
 import type { Task } from './tasks.types.js';
 
 // Ensures the task exists and the actor may access it.
@@ -38,10 +39,22 @@ export const tasksService = {
     });
   },
 
-  list(actor: AuthUser) {
-    return actor.role === 'ADMIN'
-      ? tasksRepository.findMany()
-      : tasksRepository.findByOwner(actor.id);
+  async list(actor: AuthUser, query: ListTasksQuery) {
+    // Admins see all tasks; everyone else only their own. Optional status filter.
+    const where: Prisma.TaskWhereInput = {
+      ...(actor.role === 'ADMIN' ? {} : { ownerId: actor.id }),
+      ...(query.status ? { status: query.status } : {}),
+    };
+
+    const [data, total] = await tasksRepository.list({
+      where,
+      orderBy: { [query.sort]: query.order },
+      skip: (query.page - 1) * query.limit,
+      take: query.limit,
+    });
+
+    // A consistent envelope so clients always know how to paginate.
+    return { data, total, page: query.page, limit: query.limit };
   },
 
   getById(id: string, actor: AuthUser) {

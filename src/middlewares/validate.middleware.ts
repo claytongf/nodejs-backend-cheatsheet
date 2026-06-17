@@ -10,3 +10,13 @@ export function validate(schema: ZodSchema) {
     next();
   };
 }
+
+// Same idea for query strings (?page=2&limit=20). Query values arrive as strings,
+// so the schema typically uses `z.coerce` to turn them into numbers/booleans. The
+// parsed result replaces req.query; controllers read it with a single typed cast.
+export function validateQuery(schema: ZodSchema) {
+  return (req: Request, _res: Response, next: NextFunction): void => {
+    req.query = schema.parse(req.query);
+    next();
+  };
+}

@@ -18,4 +18,13 @@ describe('GET /health', () => {
     const res = await request(app).get('/does-not-exist');
     expect(res.status).toBe(404);
   });
+
+  it('assigns a correlation id and echoes it in the response header', async () => {
+    const generated = await request(app).get('/health');
+    expect(generated.headers['x-request-id']).toBeDefined();
+
+    // An incoming correlation id is reused, not replaced.
+    const provided = await request(app).get('/health').set('x-request-id', 'trace-123');
+    expect(provided.headers['x-request-id']).toBe('trace-123');
+  });
 });

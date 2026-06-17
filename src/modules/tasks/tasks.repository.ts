@@ -1,7 +1,15 @@
 // The only place that touches prisma.task.
-import type { TaskStatus } from '@prisma/client';
+import type { Prisma, TaskStatus } from '@prisma/client';
 import { prisma } from '../../database/prisma.js';
 import type { UpdateTaskInput } from './tasks.schemas.js';
+
+// Parameters for a paginated, filtered, sorted list query.
+export interface ListTasksParams {
+  where: Prisma.TaskWhereInput;
+  orderBy: Prisma.TaskOrderByWithRelationInput;
+  skip: number;
+  take: number;
+}
 
 export interface CreateTaskData {
   title: string;
@@ -12,12 +20,18 @@ export interface CreateTaskData {
 }
 
 export const tasksRepository = {
-  findMany() {
-    return prisma.task.findMany({ orderBy: { createdAt: 'desc' } });
-  },
-
-  findByOwner(ownerId: string) {
-    return prisma.task.findMany({ where: { ownerId }, orderBy: { createdAt: 'desc' } });
+  // Returns one page of tasks plus the total count, in a single round trip.
+  // $transaction runs both queries together so the count matches the page.
+  list(params: ListTasksParams) {
+    return prisma.$transaction([
+      prisma.task.findMany({
+        where: params.where,
+        orderBy: params.orderBy,
+        skip: params.skip,
+        take: params.take,
+      }),
+      prisma.task.count({ where: params.where }),
+    ]);
   },
 
   findById(id: string) {

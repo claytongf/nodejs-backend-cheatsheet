@@ -1,6 +1,7 @@
 import type { Request, Response } from 'express';
 import { tasksService } from './tasks.service.js';
 import { requireUser } from '../../shared/utils/auth-context.js';
+import type { ListTasksQuery } from './tasks.schemas.js';
 
 export async function create(req: Request, res: Response): Promise<void> {
   const actor = requireUser(req);
@@ -10,8 +11,10 @@ export async function create(req: Request, res: Response): Promise<void> {
 
 export async function list(req: Request, res: Response): Promise<void> {
   const actor = requireUser(req);
-  const tasks = await tasksService.list(actor);
-  res.json(tasks);
+  // validateQuery has already parsed/coerced req.query against listTasksQuerySchema.
+  const query = req.query as unknown as ListTasksQuery;
+  const result = await tasksService.list(actor, query);
+  res.json(result);
 }
 
 export async function getById(req: Request, res: Response): Promise<void> {

@@ -55,6 +55,21 @@ use [Learning Index](learning-index.md).
 - [17 · Laravel → Node.js](17-laravel-to-nodejs.md)
 - [18 · Interview questions](18-interview-questions.md)
 
+### Stage 7 — Senior tier (scale & operability)
+
+For developers moving from mid-level to senior. These chapters are about running an API in
+production and the judgment that separates senior engineers.
+
+- [19 · Performance & data access](19-performance-and-data-access.md)
+- [20 · API design at scale](20-api-design-at-scale.md)
+- [21 · Reliability & resilience](21-reliability-and-resilience.md)
+- [22 · Configuration & secrets](22-configuration-and-secrets.md)
+- [23 · Observability](23-observability.md)
+- [24 · Caching](24-caching.md)
+- [25 · Scaling & architecture judgment](25-scaling-and-architecture.md)
+
+When you just need the steps for a task, use the [Cookbook](cookbook.md).
+
 ## Why this order matters
 
 You cannot debug an API if you do not understand HTTP. You cannot secure it if you do

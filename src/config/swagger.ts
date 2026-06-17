@@ -123,6 +123,15 @@ const definition = {
           updatedAt: { type: 'string', format: 'date-time' },
         },
       },
+      PaginatedTasks: {
+        type: 'object',
+        properties: {
+          data: { type: 'array', items: { $ref: '#/components/schemas/Task' } },
+          total: { type: 'integer', example: 42 },
+          page: { type: 'integer', example: 1 },
+          limit: { type: 'integer', example: 20 },
+        },
+      },
       CreateTaskInput: {
         type: 'object',
         required: ['title', 'projectId'],
@@ -419,16 +428,47 @@ const definition = {
       get: {
         tags: ['Tasks'],
         summary: 'List your tasks (admin sees all)',
+        description:
+          'Paginated, filterable, sortable. Returns an envelope with the page of ' +
+          'results plus the total count.',
+        parameters: [
+          {
+            name: 'page',
+            in: 'query',
+            schema: { type: 'integer', minimum: 1, default: 1 },
+          },
+          {
+            name: 'limit',
+            in: 'query',
+            schema: { type: 'integer', minimum: 1, maximum: 100, default: 20 },
+          },
+          {
+            name: 'status',
+            in: 'query',
+            schema: { type: 'string', enum: ['TODO', 'IN_PROGRESS', 'DONE'] },
+          },
+          {
+            name: 'sort',
+            in: 'query',
+            schema: { type: 'string', enum: ['createdAt', 'title'], default: 'createdAt' },
+          },
+          {
+            name: 'order',
+            in: 'query',
+            schema: { type: 'string', enum: ['asc', 'desc'], default: 'desc' },
+          },
+        ],
         responses: {
           200: {
-            description: 'List of tasks',
+            description: 'A page of tasks',
             content: {
               'application/json': {
-                schema: { type: 'array', items: { $ref: '#/components/schemas/Task' } },
+                schema: { $ref: '#/components/schemas/PaginatedTasks' },
               },
             },
           },
           401: { $ref: '#/components/responses/Unauthorized' },
+          422: { $ref: '#/components/responses/ValidationFailed' },
         },
       },
       post: {

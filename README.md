@@ -215,7 +215,7 @@ npm audit --audit-level=moderate
 | PATCH  | `/projects/:id`       | ✅       | Update a project (owner/admin) |
 | DELETE | `/projects/:id`       | ✅       | Delete a project (owner/admin) |
 | POST   | `/tasks`              | ✅       | Create a task                  |
-| GET    | `/tasks`              | ✅       | List your tasks                |
+| GET    | `/tasks`              | ✅       | List your tasks (paginated)    |
 | GET    | `/tasks/:id`          | ✅       | Get a task (owner/admin)       |
 | PATCH  | `/tasks/:id`          | ✅       | Update a task (owner/admin)    |
 | DELETE | `/tasks/:id`          | ✅       | Delete a task (owner/admin)    |
@@ -253,6 +253,9 @@ prompts, behavioral prep, and scoring rubrics.
 For portfolio preparation, use [docs/portfolio-guide.md](docs/portfolio-guide.md) and
 [docs/project-walkthrough.md](docs/project-walkthrough.md).
 
+When you are building something and just need the steps ("how do I add a field, an endpoint,
+pagination, a new module?"), use the task-oriented [docs/cookbook.md](docs/cookbook.md).
+
 For a single map of chapters, examples, labs, interview prep, and source files, use
 [docs/learning-index.md](docs/learning-index.md).
 
@@ -279,6 +282,17 @@ For a single map of chapters, examples, labs, interview prep, and source files, 
 | 16  | [NestJS overview](docs/16-nestjs-overview.md)                                        |
 | 17  | [Laravel → Node.js](docs/17-laravel-to-nodejs.md)                                    |
 | 18  | [Interview questions](docs/18-interview-questions.md)                                |
+| 19  | [Performance & data access](docs/19-performance-and-data-access.md)                  |
+| 20  | [API design at scale](docs/20-api-design-at-scale.md)                                |
+| 21  | [Reliability & resilience](docs/21-reliability-and-resilience.md)                    |
+| 22  | [Configuration & secrets](docs/22-configuration-and-secrets.md)                      |
+| 23  | [Observability](docs/23-observability.md)                                            |
+| 24  | [Caching](docs/24-caching.md)                                                        |
+| 25  | [Scaling & architecture judgment](docs/25-scaling-and-architecture.md)               |
+
+> **Chapters 19–25 are the senior tier** — performance, scale, reliability, observability,
+> caching, and architecture judgment. See the Senior track in
+> [docs/study-guide.md](docs/study-guide.md).
 
 ## ⚡ Cheatsheets index
 
