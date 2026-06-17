@@ -109,4 +109,20 @@ describe('Projects & Tasks', () => {
     const res = await request(app).get('/tasks?limit=999').set(bearer(token));
     expect(res.status).toBe(422);
   });
+
+  it('lists projects in the same paginated envelope', async () => {
+    const token = await registerAndLogin('proj-list@example.com');
+    await request(app).post('/projects').set(bearer(token)).send({ name: 'Project One' });
+
+    const res = await request(app).get('/projects?limit=10').set(bearer(token));
+    expect(res.status).toBe(200);
+    expect(Array.isArray(res.body.data)).toBe(true);
+    expect(res.body).toMatchObject({ total: 1, page: 1, limit: 10 });
+  });
+
+  it('rejects an invalid project list query (422)', async () => {
+    const token = await registerAndLogin('proj-bad@example.com');
+    const res = await request(app).get('/projects?page=0').set(bearer(token));
+    expect(res.status).toBe(422);
+  });
 });

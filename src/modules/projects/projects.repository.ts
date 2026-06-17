@@ -1,14 +1,28 @@
 // The only place that touches prisma.project.
+import type { Prisma } from '@prisma/client';
 import { prisma } from '../../database/prisma.js';
 import type { CreateProjectInput, UpdateProjectInput } from './projects.schemas.js';
 
-export const projectsRepository = {
-  findMany() {
-    return prisma.project.findMany({ orderBy: { createdAt: 'desc' } });
-  },
+// Parameters for a paginated, sorted list query.
+export interface ListProjectsParams {
+  where: Prisma.ProjectWhereInput;
+  orderBy: Prisma.ProjectOrderByWithRelationInput;
+  skip: number;
+  take: number;
+}
 
-  findByOwner(ownerId: string) {
-    return prisma.project.findMany({ where: { ownerId }, orderBy: { createdAt: 'desc' } });
+export const projectsRepository = {
+  // Returns one page of projects plus the total count, in a single round trip.
+  list(params: ListProjectsParams) {
+    return prisma.$transaction([
+      prisma.project.findMany({
+        where: params.where,
+        orderBy: params.orderBy,
+        skip: params.skip,
+        take: params.take,
+      }),
+      prisma.project.count({ where: params.where }),
+    ]);
   },
 
   findById(id: string) {

@@ -201,18 +201,25 @@ guessing an id). Authentication alone does not prevent it.
 
 ## 8. Add pagination, filtering & sorting
 
-This is implemented on `GET /tasks`. The pattern: validate query params with Zod, pass them
-to the service, and translate them into a Prisma query in the repository.
+Implemented on `GET /tasks`, `GET /projects`, and `GET /users` — all sharing one helper in
+[src/shared/utils/pagination.ts](../src/shared/utils/pagination.ts). The pattern: extend the
+shared `paginationSchema` with your filters/sort, validate with `validateQuery`, and let the
+service build the Prisma query and the envelope.
 
 ```ts
-// tasks.schemas.ts — coerce because query strings are always strings
-export const listTasksQuerySchema = z.object({
-  page: z.coerce.number().int().min(1).default(1),
-  limit: z.coerce.number().int().min(1).max(100).default(20),
+// tasks.schemas.ts — extend the shared schema; add only what is module-specific
+import { paginationSchema } from '../../shared/utils/pagination.js';
+
+export const listTasksQuerySchema = paginationSchema.extend({
   status: taskStatusSchema.optional(),
   sort: z.enum(['createdAt', 'title']).default('createdAt'),
   order: z.enum(['asc', 'desc']).default('desc'),
 });
+```
+```ts
+// service — reuse toSkipTake + toPage so every endpoint returns the same envelope
+const result = await tasksRepository.list({ where, orderBy: { [q.sort]: q.order }, ...toSkipTake(q) });
+return toPage(result, q);
 ```
 ```ts
 // repository — skip/take is offset pagination

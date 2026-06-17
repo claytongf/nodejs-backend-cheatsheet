@@ -1,6 +1,7 @@
 import type { Request, Response } from 'express';
 import { projectsService } from './projects.service.js';
 import { requireUser } from '../../shared/utils/auth-context.js';
+import type { ListProjectsQuery } from './projects.schemas.js';
 
 export async function create(req: Request, res: Response): Promise<void> {
   const actor = requireUser(req);
@@ -10,8 +11,9 @@ export async function create(req: Request, res: Response): Promise<void> {
 
 export async function list(req: Request, res: Response): Promise<void> {
   const actor = requireUser(req);
-  const projects = await projectsService.list(actor);
-  res.json(projects);
+  const query = req.query as unknown as ListProjectsQuery;
+  const result = await projectsService.list(actor, query);
+  res.json(result);
 }
 
 export async function getById(req: Request, res: Response): Promise<void> {

@@ -205,12 +205,12 @@ npm audit --audit-level=moderate
 | POST   | `/auth/register`      | —        | Register a new user            |
 | POST   | `/auth/login`         | —        | Log in, returns a JWT          |
 | GET    | `/auth/me`            | ✅       | Current authenticated user     |
-| GET    | `/users`              | ✅ admin | List users                     |
+| GET    | `/users`              | ✅ admin | List users (paginated)         |
 | GET    | `/users/:id`          | ✅       | Get a user                     |
 | PATCH  | `/users/:id`          | ✅       | Update a user (self or admin)  |
 | DELETE | `/users/:id`          | ✅ admin | Delete a user                  |
 | POST   | `/projects`           | ✅       | Create a project               |
-| GET    | `/projects`           | ✅       | List your projects             |
+| GET    | `/projects`           | ✅       | List your projects (paginated) |
 | GET    | `/projects/:id`       | ✅       | Get a project (owner/admin)    |
 | PATCH  | `/projects/:id`       | ✅       | Update a project (owner/admin) |
 | DELETE | `/projects/:id`       | ✅       | Delete a project (owner/admin) |

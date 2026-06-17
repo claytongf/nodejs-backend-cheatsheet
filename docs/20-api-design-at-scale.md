@@ -42,9 +42,13 @@ idempotencyStore.set(key, result);
 
 ## Practical Example from This Project
 
-- `GET /tasks` returns the `{ data, total, page, limit }` envelope (see
-  [tasks.service.ts](../src/modules/tasks/tasks.service.ts)), documented in Swagger as
-  `PaginatedTasks` in [src/config/swagger.ts](../src/config/swagger.ts).
+- **Every** list endpoint (`GET /tasks`, `GET /projects`, `GET /users`) returns the same
+  `{ data, total, page, limit }` envelope. The shape and the `page`/`limit` rules live in one
+  place — [src/shared/utils/pagination.ts](../src/shared/utils/pagination.ts) — and each
+  module extends the shared `paginationSchema` with its own filters/sort. This is the "one
+  envelope across all endpoints" rule made real; it is documented in Swagger as
+  `PaginatedTasks`/`PaginatedProjects`/`PaginatedUsers` in
+  [src/config/swagger.ts](../src/config/swagger.ts).
 - Errors are uniform: the [error middleware](../src/middlewares/error.middleware.ts) always
   emits `{ message }` (plus `{ errors }` for validation), so every client parses errors the
   same way. This is the contract half of [08 · Error handling](08-error-handling.md).
@@ -58,9 +62,13 @@ adding an optional field is backward-compatible and does not need a new version.
 
 ## Guided Exercise
 
-1. Make `GET /projects` return the same `{ data, total, page, limit }` envelope as tasks.
-2. Reuse the `listTasksQuerySchema` idea: add a `listProjectsQuerySchema`.
-3. Update the projects test to assert the envelope shape.
+The three existing list endpoints already share the envelope via the shared
+`paginationSchema`/`toPage` helpers. Practice the pattern by adding a **new** filter:
+
+1. Add an optional `q` (search) parameter to `listProjectsQuerySchema` (extend, do not
+   duplicate, the shared `paginationSchema`).
+2. Translate it into a Prisma `where` with `name: { contains: q, mode: 'insensitive' }`.
+3. Add a test asserting the search narrows results while keeping the same envelope.
 
 ## Practical Challenge
 

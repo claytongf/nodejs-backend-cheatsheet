@@ -1,12 +1,17 @@
 // Business logic and authorization for users.
 import { usersRepository } from './users.repository.js';
 import { NotFoundError, ForbiddenError } from '../../shared/errors/index.js';
+import { toSkipTake, toPage } from '../../shared/utils/pagination.js';
 import type { AuthUser } from '../../shared/types/index.js';
-import type { UpdateUserInput } from './users.schemas.js';
+import type { UpdateUserInput, ListUsersQuery } from './users.schemas.js';
 
 export const usersService = {
-  list() {
-    return usersRepository.findMany();
+  async list(query: ListUsersQuery) {
+    const result = await usersRepository.list({
+      orderBy: { [query.sort]: query.order },
+      ...toSkipTake(query),
+    });
+    return toPage(result, query);
   },
 
   async getById(id: string) {

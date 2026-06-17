@@ -1,8 +1,14 @@
 // Business logic + ownership authorization for projects.
+import type { Prisma } from '@prisma/client';
 import { projectsRepository } from './projects.repository.js';
 import { NotFoundError, ForbiddenError } from '../../shared/errors/index.js';
+import { toSkipTake, toPage } from '../../shared/utils/pagination.js';
 import type { AuthUser } from '../../shared/types/index.js';
-import type { CreateProjectInput, UpdateProjectInput } from './projects.schemas.js';
+import type {
+  CreateProjectInput,
+  UpdateProjectInput,
+  ListProjectsQuery,
+} from './projects.schemas.js';
 import type { Project } from './projects.types.js';
 
 // Shared ownership check: a user may only access their own projects (admins may access any).
@@ -22,11 +28,17 @@ export const projectsService = {
     return projectsRepository.create(actor.id, data);
   },
 
-  list(actor: AuthUser) {
+  async list(actor: AuthUser, query: ListProjectsQuery) {
     // Admins see everything; regular users see only their own.
-    return actor.role === 'ADMIN'
-      ? projectsRepository.findMany()
-      : projectsRepository.findByOwner(actor.id);
+    const where: Prisma.ProjectWhereInput = actor.role === 'ADMIN' ? {} : { ownerId: actor.id };
+
+    const result = await projectsRepository.list({
+      where,
+      orderBy: { [query.sort]: query.order },
+      ...toSkipTake(query),
+    });
+
+    return toPage(result, query);
   },
 
   getById(id: string, actor: AuthUser) {

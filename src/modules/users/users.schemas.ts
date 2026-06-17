@@ -1,4 +1,13 @@
 import { z } from 'zod';
+import { paginationSchema } from '../../shared/utils/pagination.js';
+
+// Query parameters for GET /users (admin only): shared pagination plus sort options.
+export const listUsersQuerySchema = paginationSchema.extend({
+  sort: z.enum(['createdAt', 'name', 'email']).default('createdAt'),
+  order: z.enum(['asc', 'desc']).default('desc'),
+});
+
+export type ListUsersQuery = z.infer<typeof listUsersQuerySchema>;
 
 // Partial update: any provided field must be valid; at least one is required.
 export const updateUserSchema = z

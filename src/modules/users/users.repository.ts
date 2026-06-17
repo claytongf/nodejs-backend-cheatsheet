@@ -19,9 +19,25 @@ export interface CreateUserData {
   passwordHash: string;
 }
 
+// Parameters for a paginated, sorted list query.
+export interface ListUsersParams {
+  orderBy: Prisma.UserOrderByWithRelationInput;
+  skip: number;
+  take: number;
+}
+
 export const usersRepository = {
-  findMany() {
-    return prisma.user.findMany({ select: publicSelect, orderBy: { createdAt: 'desc' } });
+  // Returns one page of users (public fields only) plus the total count.
+  list(params: ListUsersParams) {
+    return prisma.$transaction([
+      prisma.user.findMany({
+        select: publicSelect,
+        orderBy: params.orderBy,
+        skip: params.skip,
+        take: params.take,
+      }),
+      prisma.user.count(),
+    ]);
   },
 
   findById(id: string) {

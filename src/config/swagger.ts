@@ -132,6 +132,24 @@ const definition = {
           limit: { type: 'integer', example: 20 },
         },
       },
+      PaginatedProjects: {
+        type: 'object',
+        properties: {
+          data: { type: 'array', items: { $ref: '#/components/schemas/Project' } },
+          total: { type: 'integer', example: 42 },
+          page: { type: 'integer', example: 1 },
+          limit: { type: 'integer', example: 20 },
+        },
+      },
+      PaginatedUsers: {
+        type: 'object',
+        properties: {
+          data: { type: 'array', items: { $ref: '#/components/schemas/User' } },
+          total: { type: 'integer', example: 42 },
+          page: { type: 'integer', example: 1 },
+          limit: { type: 'integer', example: 20 },
+        },
+      },
       CreateTaskInput: {
         type: 'object',
         required: ['title', 'projectId'],
@@ -285,17 +303,35 @@ const definition = {
       get: {
         tags: ['Users'],
         summary: 'List all users (admin only)',
+        description: 'Paginated and sortable. Returns the page plus the total count.',
+        parameters: [
+          { name: 'page', in: 'query', schema: { type: 'integer', minimum: 1, default: 1 } },
+          {
+            name: 'limit',
+            in: 'query',
+            schema: { type: 'integer', minimum: 1, maximum: 100, default: 20 },
+          },
+          {
+            name: 'sort',
+            in: 'query',
+            schema: { type: 'string', enum: ['createdAt', 'name', 'email'], default: 'createdAt' },
+          },
+          {
+            name: 'order',
+            in: 'query',
+            schema: { type: 'string', enum: ['asc', 'desc'], default: 'desc' },
+          },
+        ],
         responses: {
           200: {
-            description: 'List of users',
+            description: 'A page of users',
             content: {
-              'application/json': {
-                schema: { type: 'array', items: { $ref: '#/components/schemas/User' } },
-              },
+              'application/json': { schema: { $ref: '#/components/schemas/PaginatedUsers' } },
             },
           },
           401: { $ref: '#/components/responses/Unauthorized' },
           403: { $ref: '#/components/responses/Forbidden' },
+          422: { $ref: '#/components/responses/ValidationFailed' },
         },
       },
     },
@@ -347,16 +383,34 @@ const definition = {
       get: {
         tags: ['Projects'],
         summary: 'List your projects (admin sees all)',
+        description: 'Paginated and sortable. Returns the page plus the total count.',
+        parameters: [
+          { name: 'page', in: 'query', schema: { type: 'integer', minimum: 1, default: 1 } },
+          {
+            name: 'limit',
+            in: 'query',
+            schema: { type: 'integer', minimum: 1, maximum: 100, default: 20 },
+          },
+          {
+            name: 'sort',
+            in: 'query',
+            schema: { type: 'string', enum: ['createdAt', 'name'], default: 'createdAt' },
+          },
+          {
+            name: 'order',
+            in: 'query',
+            schema: { type: 'string', enum: ['asc', 'desc'], default: 'desc' },
+          },
+        ],
         responses: {
           200: {
-            description: 'List of projects',
+            description: 'A page of projects',
             content: {
-              'application/json': {
-                schema: { type: 'array', items: { $ref: '#/components/schemas/Project' } },
-              },
+              'application/json': { schema: { $ref: '#/components/schemas/PaginatedProjects' } },
             },
           },
           401: { $ref: '#/components/responses/Unauthorized' },
+          422: { $ref: '#/components/responses/ValidationFailed' },
         },
       },
       post: {

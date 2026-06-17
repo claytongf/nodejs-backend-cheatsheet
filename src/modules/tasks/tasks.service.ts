@@ -3,6 +3,7 @@ import type { Prisma } from '@prisma/client';
 import { tasksRepository } from './tasks.repository.js';
 import { projectsRepository } from '../projects/projects.repository.js';
 import { NotFoundError, ForbiddenError } from '../../shared/errors/index.js';
+import { toSkipTake, toPage } from '../../shared/utils/pagination.js';
 import type { AuthUser } from '../../shared/types/index.js';
 import type { CreateTaskInput, UpdateTaskInput, ListTasksQuery } from './tasks.schemas.js';
 import type { Task } from './tasks.types.js';
@@ -46,15 +47,14 @@ export const tasksService = {
       ...(query.status ? { status: query.status } : {}),
     };
 
-    const [data, total] = await tasksRepository.list({
+    const result = await tasksRepository.list({
       where,
       orderBy: { [query.sort]: query.order },
-      skip: (query.page - 1) * query.limit,
-      take: query.limit,
+      ...toSkipTake(query),
     });
 
     // A consistent envelope so clients always know how to paginate.
-    return { data, total, page: query.page, limit: query.limit };
+    return toPage(result, query);
   },
 
   getById(id: string, actor: AuthUser) {

@@ -2,10 +2,12 @@
 import type { Request, Response } from 'express';
 import { usersService } from './users.service.js';
 import { requireUser } from '../../shared/utils/auth-context.js';
+import type { ListUsersQuery } from './users.schemas.js';
 
-export async function list(_req: Request, res: Response): Promise<void> {
-  const users = await usersService.list();
-  res.json(users);
+export async function list(req: Request, res: Response): Promise<void> {
+  const query = req.query as unknown as ListUsersQuery;
+  const result = await usersService.list(query);
+  res.json(result);
 }
 
 export async function getById(req: Request, res: Response): Promise<void> {
