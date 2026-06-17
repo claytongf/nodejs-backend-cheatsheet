@@ -72,6 +72,7 @@ nodejs-backend-cheatsheet/
 ├── docs/                     # Deep-dive learning chapters (00–18)
 ├── cheatsheets/              # Quick-scan reference sheets
 ├── examples/                 # Small, isolated, runnable examples
+├── labs/                     # Practical implementation and debugging labs
 ├── scripts/                  # Local project utilities
 ├── prisma.config.ts          # Prisma 7 config (schema path, migrate URL, seed)
 ├── prisma/                   # Prisma schema + seed
@@ -241,6 +242,9 @@ error responses, and **Bearer token** auth — click **Authorize** and paste a J
 Start at [docs/00-roadmap.md](docs/00-roadmap.md) for the full chapter order. If you want
 a path tailored to your background or goal, use [docs/study-guide.md](docs/study-guide.md).
 Each chapter has a study checklist and interview questions.
+
+For hands-on practice, use [labs/README.md](labs/README.md). Labs ask you to change the
+real API, update tests, and explain the trade-offs.
 
 ## 📚 Documentation index
 
