@@ -238,7 +238,9 @@ error responses, and **Bearer token** auth — click **Authorize** and paste a J
 
 ## 🗺️ Learning roadmap
 
-Start at [docs/00-roadmap.md](docs/00-roadmap.md) and work through the chapters in order. Each chapter has a study checklist and interview questions.
+Start at [docs/00-roadmap.md](docs/00-roadmap.md) for the full chapter order. If you want
+a path tailored to your background or goal, use [docs/study-guide.md](docs/study-guide.md).
+Each chapter has a study checklist and interview questions.
 
 ## 📚 Documentation index
 

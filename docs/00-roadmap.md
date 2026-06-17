@@ -10,6 +10,10 @@ A suggested path through this repository, from zero to a job-ready Node.js backe
 4. Keep the matching `cheatsheets/` file open for quick recall.
 5. Answer the interview questions at the end of each chapter.
 
+If you want a path tailored to your background, start with
+[Study Guide](study-guide.md). It provides tracks for beginners, Laravel/PHP developers,
+junior interviews, mid-level interviews, and fast review.
+
 ## The path
 
 ### Stage 1 — Foundations
@@ -69,6 +73,7 @@ them in PHP. Skim Stages 1–2 quickly, then focus on the **differences**: the e
 - [ ] I can secure an endpoint with JWT + roles.
 - [ ] I can write an integration test with Supertest.
 - [ ] I can run the whole stack with Docker Compose.
+- [ ] I can choose a study track from [Study Guide](study-guide.md).
 
 ## Interview questions
 
