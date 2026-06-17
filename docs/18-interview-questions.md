@@ -123,5 +123,7 @@ service → repository → Prisma/Postgres, with Zod validation, JWT auth, role 
 authorization, centralized errors, and Supertest tests, all containerized via Docker
 Compose.
 
-**What would you improve for production?** Add helmet, rate limiting, CORS, refresh tokens,
-observability/metrics, and a CI/CD pipeline with `migrate deploy`.
+**What would you improve for production?** This project already includes helmet, CORS,
+rate limiting, structured logs, Docker, and CI migrations. Next steps would be refresh
+tokens, stronger CORS origin policy, metrics/tracing, request IDs, secret rotation,
+database backup strategy, and deployment-specific health/readiness checks.

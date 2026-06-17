@@ -23,7 +23,10 @@
     "prisma:migrate": "prisma migrate dev",
     "prisma:deploy": "prisma migrate deploy",
     "prisma:studio": "prisma studio",
-    "db:seed": "tsx prisma/seed.ts"
+    "db:seed": "tsx prisma/seed.ts",
+    "db:test:create": "tsx scripts/create-test-database.ts",
+    "db:test:migrate": "NODE_ENV=test prisma migrate deploy",
+    "db:test:setup": "npm run db:test:create && npm run db:test:migrate"
   },
   "overrides": {
     "js-yaml": "^4.2.0",

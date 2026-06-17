@@ -72,6 +72,7 @@ nodejs-backend-cheatsheet/
 ├── docs/                     # Deep-dive learning chapters (00–18)
 ├── cheatsheets/              # Quick-scan reference sheets
 ├── examples/                 # Small, isolated, runnable examples
+├── scripts/                  # Local project utilities
 ├── prisma.config.ts          # Prisma 7 config (schema path, migrate URL, seed)
 ├── prisma/                   # Prisma schema + seed
 ├── src/                      # The Task Manager API
@@ -166,9 +167,33 @@ npm run typecheck    # type-check without emitting
 
 ## 🧪 Running tests
 
+The test suite uses `.env.test` and a separate PostgreSQL database named
+`taskmanager_test`, so test data never touches your development data.
+
 ```bash
+npm run db:test:setup # create the test DB if needed and apply migrations
 npm test             # run all tests (Jest + Supertest)
 npm run test:watch   # watch mode
+```
+
+If you reset Docker volumes with `docker compose down -v`, run `npm run db:test:setup`
+again before running the tests.
+
+## ✅ Validation checklist
+
+Before committing a change, run:
+
+```bash
+npm run lint
+npm run typecheck
+npm run build
+npm test
+```
+
+For dependency security checks, run:
+
+```bash
+npm audit --audit-level=moderate
 ```
 
 ## 🔌 API endpoints

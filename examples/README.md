@@ -24,8 +24,8 @@ npx tsx examples/<folder>/index.ts
 
 ## Prerequisites
 
-Examples `01`–`07` run with the dependencies already in the project. Examples `08`–`10`
-use libraries that become first-class project dependencies in later phases:
+All npm dependencies required by the examples are already installed by `npm install`.
+Most examples run immediately. Database-backed examples need PostgreSQL and migrations.
 
 | Example             | Needs                                 | Introduced in        |
 | ------------------- | ------------------------------------- | -------------------- |
@@ -33,4 +33,15 @@ use libraries that become first-class project dependencies in later phases:
 | `09-prisma-crud`    | `@prisma/client` + a running database | Phase 7 (Prisma)     |
 | `10-tests`          | `jest` / `ts-jest`                    | Phase 10 (tests)     |
 
-Until then, install the relevant package on demand (e.g. `npm i -D zod`) to run those examples.
+For `09-prisma-crud`, prepare the development database first:
+
+```bash
+docker compose up -d
+npm run prisma:migrate
+```
+
+For `10-tests`, prepare the separate test database first:
+
+```bash
+npm run db:test:setup
+```

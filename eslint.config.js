@@ -21,7 +21,7 @@ export default tseslint.config(
   },
   {
     // Examples and CLI scripts (e.g. the Prisma seed) print to the console by design.
-    files: ['examples/**/*.ts', 'prisma/**/*.ts'],
+    files: ['examples/**/*.ts', 'prisma/**/*.ts', 'scripts/**/*.ts'],
     rules: {
       'no-console': 'off',
     },
