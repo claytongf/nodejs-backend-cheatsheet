@@ -250,6 +250,9 @@ For interview practice, use [interview-prep/README.md](interview-prep/README.md)
 includes question banks, mock interviews, coding prompts, debugging drills, system design
 prompts, behavioral prep, and scoring rubrics.
 
+For portfolio preparation, use [docs/portfolio-guide.md](docs/portfolio-guide.md) and
+[docs/project-walkthrough.md](docs/project-walkthrough.md).
+
 ## 📚 Documentation index
 
 | #   | Chapter                                                                              |
