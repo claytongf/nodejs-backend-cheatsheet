@@ -3,7 +3,7 @@
 // points visitors to the live API surfaces and the learning material.
 
 // Placeholder — replace with your real repository URL.
-const REPO_URL = 'https://github.com/your-username/nodejs-backend-cheatsheet';
+const REPO_URL = 'https://github.com/claytongf/nodejs-backend-cheatsheet';
 
 export const landingPage = `<!doctype html>
 <html lang="en">
@@ -47,8 +47,8 @@ export const landingPage = `<!doctype html>
 
     <h2>Learn more</h2>
     <ul>
-      <li><a href="${REPO_URL}">GitHub repository</a> (replace the placeholder URL)</li>
-      <li><a href="${REPO_URL}/tree/main/docs">Documentation folder</a> — chapters 00–18</li>
+      <li><a href="${REPO_URL}">GitHub repository</a></li>
+      <li><a href="${REPO_URL}/tree/main/docs">Documentation folder</a> — chapters 00–25</li>
       <li><a href="${REPO_URL}/blob/main/docs/00-roadmap.md">Learning roadmap</a></li>
     </ul>
 
