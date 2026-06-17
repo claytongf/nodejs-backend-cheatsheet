@@ -246,6 +246,10 @@ Each chapter has a study checklist and interview questions.
 For hands-on practice, use [labs/README.md](labs/README.md). Labs ask you to change the
 real API, update tests, and explain the trade-offs.
 
+For interview practice, use [interview-prep/README.md](interview-prep/README.md). It
+includes question banks, mock interviews, coding prompts, debugging drills, system design
+prompts, behavioral prep, and scoring rubrics.
+
 ## 📚 Documentation index
 
 | #   | Chapter                                                                              |
