@@ -1,5 +1,9 @@
 # 23 · Observability
 
+> **Live in this project:** the API exposes `GET /metrics` (Prometheus text format) and a
+> `GET /ready` readiness probe that pings the database — see
+> [`src/app.ts`](../src/app.ts) and [`src/shared/utils/metrics.ts`](../src/shared/utils/metrics.ts).
+
 ## Learning Objective
 
 By the end of this chapter, you should be able to make a service observable: structured

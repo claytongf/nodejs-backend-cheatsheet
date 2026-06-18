@@ -10,6 +10,8 @@ import swaggerUi from 'swagger-ui-express';
 import { env } from './config/env.js';
 import { logger } from './config/logger.js';
 import { openapiSpec } from './config/swagger.js';
+import { prisma } from './database/prisma.js';
+import { metricsMiddleware, renderMetrics } from './shared/utils/metrics.js';
 import { landingPage } from './web/landing.js';
 import { authRouter } from './modules/auth/auth.routes.js';
 import { usersRouter } from './modules/users/users.routes.js';
@@ -53,6 +55,10 @@ export function createApp() {
     }),
   );
 
+  // Count every request for the /metrics endpoint below. Placed early so it observes
+  // all routes, including health checks and 404s.
+  app.use(metricsMiddleware);
+
   // Basic rate limiting (relaxed in tests so the suite is not throttled):
   app.use(
     rateLimit({
@@ -76,9 +82,31 @@ export function createApp() {
     }),
   );
 
-  // Health check (no auth).
+  // Liveness check (no auth): is the process up and able to respond at all?
+  // A liveness probe should NOT touch the database — if the DB is down we still want the
+  // process to stay alive (an orchestrator restarting it would not bring the DB back).
   app.get('/health', (_req: Request, res: Response) => {
     res.json({ status: 'ok', uptime: process.uptime() });
+  });
+
+  // Readiness check (no auth): should this instance receive traffic *right now*?
+  // Here we verify the database is reachable. If it is not, we return 503 so a load
+  // balancer/orchestrator stops routing requests to this instance until it recovers.
+  // See docs/21-reliability-and-resilience.md and docs/23-observability.md.
+  app.get('/ready', async (_req: Request, res: Response) => {
+    try {
+      await prisma.$queryRaw`SELECT 1`;
+      res.json({ status: 'ready' });
+    } catch (err) {
+      logger.error({ err }, 'Readiness check failed: database unreachable');
+      res.status(503).json({ status: 'not_ready', reason: 'database_unreachable' });
+    }
+  });
+
+  // Metrics endpoint (no auth) in Prometheus text format. In production you would protect
+  // this (network policy or auth) so it is only reachable by your scraper.
+  app.get('/metrics', (_req: Request, res: Response) => {
+    res.type('text/plain; version=0.0.4').send(renderMetrics());
   });
 
   // Feature routers.

@@ -1,5 +1,9 @@
 # 13 · Security Best Practices
 
+> **Hands-on:** [`examples/13-security`](../examples/13-security) shows each common Node.js
+> vulnerability (SQL injection, JWT `alg:none`, mass assignment, ReDoS, prototype pollution,
+> timing attacks, error leakage) as runnable *vulnerable vs. fixed* code.
+
 ## What it is
 
 The set of habits and controls that keep an API safe: validating input, hashing secrets,

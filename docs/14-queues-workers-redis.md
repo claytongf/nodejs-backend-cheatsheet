@@ -1,5 +1,9 @@
 # 14 · Queues, Workers & Redis
 
+> **Hands-on:** [`examples/11-queues-workers`](../examples/11-queues-workers) is a runnable,
+> dependency-free queue + worker (enqueue → process → retry → dead-letter) that mirrors the
+> BullMQ/Redis pattern described below.
+
 ## What it is
 
 A **queue** lets you push slow or non-urgent work (sending email, generating reports,

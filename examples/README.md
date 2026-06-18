@@ -18,6 +18,9 @@ npx tsx examples/<folder>/index.ts
 | `08-zod-validation` | Validating input with Zod       | [07](../docs/07-validation-with-zod.md)             |
 | `09-prisma-crud`    | Prisma CRUD (needs the DB)      | [09](../docs/09-database-prisma-postgresql.md)      |
 | `10-tests`          | Jest + Supertest                | [12](../docs/12-testing-jest-supertest.md)          |
+| `11-queues-workers` | Background jobs & retries       | [14](../docs/14-queues-workers-redis.md)            |
+| `12-transactions`   | Atomic multi-write (needs DB)   | [09](../docs/09-database-prisma-postgresql.md)      |
+| `13-security`       | Vulnerabilities & fixes         | [13](../docs/13-security-best-practices.md)         |
 
 > Examples are deliberately excluded from the main `tsconfig` build so they stay simple and
 > independent from the API in `src/`.

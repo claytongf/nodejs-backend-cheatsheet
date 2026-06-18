@@ -1,5 +1,9 @@
 # 09 · Database: Prisma & PostgreSQL
 
+> **Hands-on:** [`examples/09-prisma-crud`](../examples/09-prisma-crud) covers CRUD, and
+> [`examples/12-transactions`](../examples/12-transactions) shows atomic multi-write
+> transactions (`$transaction`) with rollback on failure.
+
 ## What it is
 
 **PostgreSQL** is a powerful open-source relational database. **Prisma** is a type-safe ORM

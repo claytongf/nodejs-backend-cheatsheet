@@ -203,7 +203,9 @@ npm audit --audit-level=moderate
 
 | Method | Path                  | Auth     | Description                    |
 | ------ | --------------------- | -------- | ------------------------------ |
-| GET    | `/health`             | —        | Health check                   |
+| GET    | `/health`             | —        | Liveness probe                 |
+| GET    | `/ready`              | —        | Readiness probe (pings the DB) |
+| GET    | `/metrics`            | —        | Prometheus metrics             |
 | POST   | `/auth/register`      | —        | Register a new user            |
 | POST   | `/auth/login`         | —        | Log in, returns a JWT          |
 | GET    | `/auth/me`            | ✅       | Current authenticated user     |
@@ -233,6 +235,8 @@ to explore the API. With the server running (`npm run dev`):
 | Landing page  | <http://localhost:3000/>         | A static page describing the project with links    |
 | API docs      | <http://localhost:3000/api-docs> | Interactive Swagger UI (OpenAPI) for all endpoints |
 | Health check  | <http://localhost:3000/health>   | Liveness probe (`{ "status": "ok" }`)              |
+| Readiness     | <http://localhost:3000/ready>    | Readiness probe; 503 if the DB is unreachable      |
+| Metrics       | <http://localhost:3000/metrics>  | Prometheus text format (requests, uptime, memory)  |
 | Prisma Studio | `npm run prisma:studio`          | Visual database browser (opens in your browser)    |
 
 The Swagger UI documents Auth, Users, Projects, and Tasks with request/response examples,
