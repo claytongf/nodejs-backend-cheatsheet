@@ -9,6 +9,8 @@ A practical, well-documented Node.js backend learning repository — built as a 
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1?logo=postgresql&logoColor=white)
 ![Jest](https://img.shields.io/badge/Tested%20with-Jest-C21325?logo=jest&logoColor=white)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-Donate-FFDD00?style=flat&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/botaficha)
+[![GitHub stars](https://img.shields.io/github/stars/claytongf/workscale-simulator.svg?style=social&label=Star)](https://github.com/claytongf/workscale-simulator/stargazers)
 
 > **All content is in English** and includes **Laravel → Node.js** comparisons, because many backend developers arrive here from PHP/Laravel.
 
@@ -334,3 +336,11 @@ Contributions are welcome — docs, examples, tests, bug fixes, and cheat sheets
 ## 📄 License
 
 Licensed under the [MIT License](LICENSE).
+
+---
+
+## 💖 Support the Project / Apoie o Projeto
+
+If this interactive cheat sheet helped you, consider supporting the project:
+
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Donate-yellow.svg?style=for-the-badge&logo=buy-me-a-coffee)](https://buymeacoffee.com/botaficha)
